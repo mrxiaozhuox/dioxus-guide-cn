@@ -48,3 +48,15 @@ WASM 有很多系统限制，这导致你的代码不能包含任何原生的系
 - [ECommerce](https://github.com/DioxusLabs/example-projects/tree/master/ecommerce-site)
 
 ![TODOMVC_IMG](https://github.com/DioxusLabs/example-projects/raw/master/todomvc/example.png)
+
+### SSR 支持
+
+Dioxus 支持 SSR 的服务端渲染。
+
+为了从 WebServer 渲染到静态文件 `.html`，您需要确保在 Dioxus 功能中启用了 SSR 特性。
+
+```rust
+let contents = dioxus::ssr::render_vdom(&dom);
+```
+
+我们不认为 SSR API 在未来会有太大的变化。

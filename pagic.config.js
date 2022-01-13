@@ -6,7 +6,7 @@ export default {
     github: "http://github.com/mrxiaozhuox/dioxus-guide-cn",
     nav: [
         {
-            text: "Dixosus 工作室",
+            text: "官网",
             link: "https://dioxuslabs.com/",
         }
     ],
@@ -23,6 +23,20 @@ export default {
             {
                 text: '入门',
                 link: "/docs/hello-world.html",
+            },
+            {
+                text: 'UI设计',
+                link: "/docs/ui/index.html",
+                children: [
+                    {
+                        text: "元素介绍",
+                        link: "/docs/ui/vnodes.html"
+                    },
+                    {
+                        text: "条件渲染",
+                        link: "/docs/ui/conditional-render.html"
+                    }
+                ],
             },
         ]
     },

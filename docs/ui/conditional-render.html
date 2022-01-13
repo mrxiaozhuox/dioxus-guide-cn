@@ -1,0 +1,119 @@
+<!doctype html><html class="" data-reactroot=""><head>
+<meta data-react-helmet="true" charset="utf-8"/><meta data-react-helmet="true" http-equiv="x-ua-compatible" content="ie=edge"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1"/><meta data-react-helmet="true" property="og:title" content="条件渲染 · Dioxus 开发指南"/><meta data-react-helmet="true" property="og:type" content="article"/><meta data-react-helmet="true" name="twitter:card" content="summary"/>
+<title data-react-helmet="true">条件渲染 · Dioxus 开发指南</title>
+<link data-react-helmet="true" rel="stylesheet" href="/assets/index.css"/><link data-react-helmet="true" id="prismTheme" rel="stylesheet" href="/assets/prism.css"/>
+<script data-react-helmet="true" >
+    const shouldSetIsDark = document.cookie.includes('is_dark=1') ? true : document.cookie.includes('is_dark=0') ? false : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (shouldSetIsDark) {
+      document.documentElement.classList.add('is_dark');
+      document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
+    }
+  </script>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Dioxus 开发指南</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Dioxus 开发指南</a></h1></li><li class="hide_on_mobile"><a href="https://dioxuslabs.com/">官网</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="http://github.com/mrxiaozhuox/dioxus-guide-cn" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class=""><a href="/index.html" class="nav_link">介绍</a></li><li class=""><a href="/docs/setup.html" class="nav_link">安装</a></li><li class=""><a href="/docs/hello-world.html" class="nav_link">入门</a></li><li class="unfold"><a href="/docs/ui/index.html" class="nav_link">UI设计<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/ui/vnodes.html" class="nav_link">元素介绍</a></li><li class=""><a href="/docs/ui/conditional-render.html" class="nav_link">条件渲染</a></li></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>条件渲染</h1>
+<p>组件往往需要在不同的情况下渲染不同的内容到页面上，页面的内容并不是一成不变的。
+我们常常需要根据不同的情况去渲染界面。</p>
+<h2 id="%E6%9C%89%E6%9D%A1%E4%BB%B6%E7%9A%84%E8%BF%94%E5%9B%9E%E5%85%83%E7%B4%A0">有条件的返回元素<a class="anchor" href="#%E6%9C%89%E6%9D%A1%E4%BB%B6%E7%9A%84%E8%BF%94%E5%9B%9E%E5%85%83%E7%B4%A0">§</a></h2>
+<p>在一些组件中，你可能需要在不同的判断语句下返回不同的 Element 元素，我们来完成一个简单的 Demo ：</p>
+<ul>
+<li>在线：显示应用页面</li>
+<li>离线：显示登陆页面</li>
+</ul>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props, PartialEq)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">AppProps</span> <span class="token punctuation">{</span>
+    logged_in<span class="token punctuation">:</span> <span class="token keyword">bool</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>我们在 <code>道具(Props)</code> 中定义了一个是否登陆的 Bool 值，它将用于判断我们的登陆状态。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">App</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">AppProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> props<span class="token punctuation">.</span>logged_in <span class="token punctuation">{</span>
+        cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+            <span class="token class-name">DashboardScreen</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+            <span class="token class-name">LoginScreen</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>在上方代码中，我们判断了道具中 <code>logged_in</code> 变量的状态，并返回了相应的自定义组件渲染。</p>
+<blockquote>
+<p>自定义组件将在后续内容中讲解到。</p>
+</blockquote>
+<h2 id="%E4%BD%BF%E7%94%A8%E5%8C%B9%E9%85%8D%E8%AF%AD%E5%8F%A5">使用匹配语句<a class="anchor" href="#%E4%BD%BF%E7%94%A8%E5%8C%B9%E9%85%8D%E8%AF%AD%E5%8F%A5">§</a></h2>
+<p>匹配语句其实和上面的判断方法很像，以下是大概的使用演示：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">App</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">)</span><span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token keyword">match</span> <span class="token function">get_name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Ok</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token operator">=></span> cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span> <span class="token string">"你好，{name}"</span> <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token class-name">Err</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token operator">=></span> cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span> <span class="token string">"对不起，我还不知道你的名字，因为出现错误了： {err}"</span> <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>如果你想让代码变得更加简洁，省略掉 <code>cx.render</code> 这一部分，你可以这样：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">App</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">)</span><span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token keyword">match</span> <span class="token function">get_name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token string">"jack"</span> <span class="token operator">=></span> <span class="token macro property">rsx!</span><span class="token punctuation">(</span>cx<span class="token punctuation">,</span> <span class="token string">"你好啊杰克，最近怎么样？"</span> <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token string">"diane"</span> <span class="token operator">=></span> <span class="token macro property">rsx!</span><span class="token punctuation">(</span>cx<span class="token punctuation">,</span> <span class="token string">"你好啊黛安娜，最近怎么样？"</span> <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        name <span class="token operator">=></span> <span class="token macro property">rsx!</span><span class="token punctuation">(</span>cx<span class="token punctuation">,</span> <span class="token string">"你好：{name}"</span> <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>为 <code>rsx!()</code> 在第一个参数处传递 cx 可以让宏自动调用 render 方法。</p>
+<h2 id="rsx-%E5%B5%8C%E5%A5%97">RSX 嵌套<a class="anchor" href="#rsx-%E5%B5%8C%E5%A5%97">§</a></h2>
+<p>我们可以在 <code>rsx!()</code> 中嵌套一个新的 <code>rsx!()</code>，类似于这样：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        <span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+            <span class="token string">"more rsx!"</span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>也可以将它们分开调用（比如保存到一个变量值中）：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> title <span class="token operator">=</span> <span class="token macro property">rsx!</span><span class="token punctuation">(</span> <span class="token string">"more rsx!"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        title
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>如果我们希望条件运行后的结果同时包含一个 <strong>头组件</strong> 和 <strong>尾组件</strong>，那这对我们来说很有用：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> screen <span class="token operator">=</span> <span class="token keyword">match</span> logged_in <span class="token punctuation">{</span>
+    <span class="token boolean">true</span> <span class="token operator">=></span> <span class="token macro property">rsx!</span><span class="token punctuation">(</span><span class="token class-name">DashboardScreen</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token boolean">false</span> <span class="token operator">=></span> <span class="token macro property">rsx!</span><span class="token punctuation">(</span><span class="token class-name">LoginScreen</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+    <span class="token class-name">Navbar</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    screen<span class="token punctuation">,</span>
+    <span class="token class-name">Footer</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<h2 id="%E5%B8%83%E5%B0%94%E6%98%A0%E5%B0%84">布尔映射<a class="anchor" href="#%E5%B8%83%E5%B0%94%E6%98%A0%E5%B0%84">§</a></h2>
+<p>我们建议您尝试有条件地 隐藏/显示 一个元素时使用 “布尔映射” 模式。</p>
+<p>Rust 允许您通过调用 <code>and_then()</code> 将任何布尔值转换为任何其他类型。我们可以在组件中通过映射到某些元素来利用这个功能。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> show_title <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        show_title<span class="token punctuation">.</span><span class="token function">and_then</span><span class="token punctuation">(</span><span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+            <span class="token string">"这是文章标题"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>我们可以用它做很多事情，再比如：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> user_name <span class="token operator">=</span> <span class="token class-name">Some</span><span class="token punctuation">(</span><span class="token string">"张三"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        user_name<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>name<span class="token closure-punctuation punctuation">|</span></span> <span class="token macro property">rsx!</span><span class="token punctuation">(</span><span class="token string">"你好 {name}"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<h2 id="%E7%A9%BA%E5%85%83%E7%B4%A0">空元素<a class="anchor" href="#%E7%A9%BA%E5%85%83%E7%B4%A0">§</a></h2>
+<p>有时候，你并不打算返回任何元素时，你可以直接返回一个 <code>None</code>，因为 <code>Element</code> 本质就是 <code>Option&lt;VNode&gt;</code> 的别名。
+所以说它支持你返回 <code>None</code> 这个空的值。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">demo</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token class-name">None</span>
+<span class="token punctuation">}</span>
+</code></pre></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E6%9C%89%E6%9D%A1%E4%BB%B6%E7%9A%84%E8%BF%94%E5%9B%9E%E5%85%83%E7%B4%A0">有条件的返回元素</a></li><li><a href="#%E4%BD%BF%E7%94%A8%E5%8C%B9%E9%85%8D%E8%AF%AD%E5%8F%A5">使用匹配语句</a></li><li><a href="#rsx-%E5%B5%8C%E5%A5%97">RSX 嵌套</a></li><li><a href="#%E5%B8%83%E5%B0%94%E6%98%A0%E5%B0%84">布尔映射</a></li><li><a href="#%E7%A9%BA%E5%85%83%E7%B4%A0">空元素</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

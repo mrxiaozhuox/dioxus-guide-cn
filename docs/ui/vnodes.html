@@ -1,0 +1,120 @@
+<!doctype html><html class="" data-reactroot=""><head>
+<meta data-react-helmet="true" charset="utf-8"/><meta data-react-helmet="true" http-equiv="x-ua-compatible" content="ie=edge"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1"/><meta data-react-helmet="true" property="og:title" content="使用元素声明UI · Dioxus 开发指南"/><meta data-react-helmet="true" property="og:type" content="article"/><meta data-react-helmet="true" name="twitter:card" content="summary"/>
+<title data-react-helmet="true">使用元素声明UI · Dioxus 开发指南</title>
+<link data-react-helmet="true" rel="stylesheet" href="/assets/index.css"/><link data-react-helmet="true" id="prismTheme" rel="stylesheet" href="/assets/prism.css"/>
+<script data-react-helmet="true" >
+    const shouldSetIsDark = document.cookie.includes('is_dark=1') ? true : document.cookie.includes('is_dark=0') ? false : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (shouldSetIsDark) {
+      document.documentElement.classList.add('is_dark');
+      document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
+    }
+  </script>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Dioxus 开发指南</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Dioxus 开发指南</a></h1></li><li class="hide_on_mobile"><a href="https://dioxuslabs.com/">官网</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="http://github.com/mrxiaozhuox/dioxus-guide-cn" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class=""><a href="/index.html" class="nav_link">介绍</a></li><li class=""><a href="/docs/setup.html" class="nav_link">安装</a></li><li class=""><a href="/docs/hello-world.html" class="nav_link">入门</a></li><li class="unfold"><a href="/docs/ui/index.html" class="nav_link">UI设计<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/ui/vnodes.html" class="nav_link">元素介绍</a></li><li class=""><a href="/docs/ui/conditional-render.html" class="nav_link">条件渲染</a></li></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>使用元素声明UI</h1>
+<p>每一个 用户UI 都是由多个元素交叉组织而成，一堆堆元素组成了一切复杂的应用程序界面。
+在 Dioxus 中，我们可以使用组件来包装元素，再将组件当成一个更到的元素。
+这样一层一层的包裹，便形成了最终的应用程序！</p>
+<h2 id="%E5%A3%B0%E6%98%8E%E5%85%83%E7%B4%A0">声明元素<a class="anchor" href="#%E5%A3%B0%E6%98%8E%E5%85%83%E7%B4%A0">§</a></h2>
+<p>Dioxus 基于 HTML\CSS 渲染器，所以说我们可以直接使用 HTML 所支持的所有标签，我们需要将声明包含在 <code>rsx!()</code> 宏中：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>或者使用 <code>Dioxus-SSR</code> 直接获取有效的 HTML 元素：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token namespace">dioxus<span class="token punctuation">::</span>ssr<span class="token punctuation">::</span></span><span class="token function">render_lazy</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<p>它的结果为：（这就是一个HTML标签）</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>我们可以使用 <code>$tag_name {}</code> 生成任何一个有效的 HTML 标签。</p>
+<h2 id="%E7%BC%96%E6%8E%92%E5%85%83%E7%B4%A0">编排元素<a class="anchor" href="#%E7%BC%96%E6%8E%92%E5%85%83%E7%B4%A0">§</a></h2>
+<p>当然，我们也可以像 HTML 一样在元素中嵌入其他子元素，它非常简单：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        h1 <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        h2 <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        p <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>它会渲染为这样的 HTML 代码：</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>这看起来很酷！我们可以用它来直接构建我们想要的 UI 结构了！</p>
+<h2 id="%E5%85%83%E7%B4%A0%E6%96%87%E6%9C%AC">元素文本<a class="anchor" href="#%E5%85%83%E7%B4%A0%E6%96%87%E6%9C%AC">§</a></h2>
+<p>光有元素标签可远远不够，我们还需要在元素中加入一些文本吧：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        h1 <span class="token punctuation">{</span> <span class="token string">"标题"</span> <span class="token punctuation">}</span>
+        p <span class="token punctuation">{</span> <span class="token string">"一些文本内容"</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>文本往往不可能一成不变，因为我们需要动态应用，而不是定义好的内容！</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> name <span class="token operator">=</span> <span class="token string">"mrxiaozhuox"</span><span class="token punctuation">;</span>
+<span class="token macro property">rsx!</span><span class="token punctuation">(</span><span class="token string">"hello {name}"</span><span class="token punctuation">)</span>
+</code></pre>
+<p>上方代码会将 <code>name</code> 内容绑定到内容 <code>{name}</code> 中，类似于 Rust 的 <code>format!(&quot;{}&quot;, &quot;hi&quot;);</code></p>
+<p>但是您不能在字符串内部进行任何逻辑判断，或者完成调用方法之类的操作。但是我们可以使用：<code>format_args!()</code></p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span> <span class="token punctuation">{</span><span class="token macro property">format_args!</span><span class="token punctuation">(</span><span class="token string">"Hello {}"</span><span class="token punctuation">,</span> <span class="token keyword">if</span> enabled <span class="token punctuation">{</span> <span class="token string">"Jack"</span> <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token string">"Bob"</span> <span class="token punctuation">}</span> <span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
+</code></pre>
+<p>或者这样进行字符串拼接：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span> <span class="token string">"Hello "</span><span class="token punctuation">,</span>  <span class="token punctuation">[</span><span class="token keyword">if</span> enabled <span class="token punctuation">{</span> <span class="token string">"Jack"</span> <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token string">"Bob"</span> <span class="token punctuation">}</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
+</code></pre>
+<p>但是我们建议您在 <code>rsx!()</code> 外将字符串处理好，再输入到元素中。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> name <span class="token operator">=</span> <span class="token keyword">if</span> enabled <span class="token punctuation">{</span> <span class="token string">"Jack"</span> <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token string">"Bob"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token macro property">rsx!</span> <span class="token punctuation">(</span> <span class="token string">"hello {name}"</span> <span class="token punctuation">)</span>
+</code></pre>
+<h2 id="%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7">元素属性<a class="anchor" href="#%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7">§</a></h2>
+<p>除了渲染的文本，HTML 元素中还可以设置很多自定义属性（这非常重要）</p>
+<p>在 Dioxus 中，声明元素属性的方法也非常的简洁：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        hidden<span class="token punctuation">:</span> <span class="token string">"true"</span><span class="token punctuation">,</span>
+        background_color<span class="token punctuation">:</span> <span class="token string">"blue"</span><span class="token punctuation">,</span>
+        class<span class="token punctuation">:</span> <span class="token string">"card color-{mycolor}"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>我们在所有元素标签内部定义了它们常用的属性，这样你在定义时可以防止拼写错误，同时还很方便。
+但是如果你想向元素加入一个 <code>Dioxus-HTML</code> 相应元素标签中未声明的属性时，你可以这么做：</p>
+<pre class="language-autoit"><code class="language-autoit">rsx!<span class="token punctuation">(</span>
+    div {
+        <span class="token string">"customAttr"</span><span class="token punctuation">:</span> <span class="token string">"这是一个自定义属性"</span>
+    }
+<span class="token punctuation">)</span>
+</code></pre>
+<blockquote>
+<p>注：如果一个属性是常用的，请向我们发起 Issue 并告知这个 <code>Attrbuite</code> 是需要的！</p>
+</blockquote>
+<p>任何属性必须放置在 <code>内容</code> 和 <code>子元素</code> 之前：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token comment">// 正确的示例</span>
+<span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        background_color<span class="token punctuation">:</span> <span class="token string">"blue"</span><span class="token punctuation">,</span>
+        <span class="token string">"hello world"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// 错误的示例</span>
+<span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        <span class="token string">"hello world"</span>
+        background_color<span class="token punctuation">:</span> <span class="token string">"blue"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<h2 id="%E7%9B%91%E5%90%AC%E5%99%A8">监听器<a class="anchor" href="#%E7%9B%91%E5%90%AC%E5%99%A8">§</a></h2>
+<p>元素监听器是一种特殊的属性，它接受一个闭包函数（回调函数），当事件发生时，回调函数会被调用。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    div <span class="token punctuation">{</span>
+        onclick<span class="token punctuation">:</span> <span class="token keyword">move</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token namespace">log<span class="token punctuation">::</span></span><span class="token macro property">debug!</span><span class="token punctuation">(</span><span class="token string">"div clicked!"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>我们将在后面的章节中着重讲解这方面的内容。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%A3%B0%E6%98%8E%E5%85%83%E7%B4%A0">声明元素</a></li><li><a href="#%E7%BC%96%E6%8E%92%E5%85%83%E7%B4%A0">编排元素</a></li><li><a href="#%E5%85%83%E7%B4%A0%E6%96%87%E6%9C%AC">元素文本</a></li><li><a href="#%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7">元素属性</a></li><li><a href="#%E7%9B%91%E5%90%AC%E5%99%A8">监听器</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

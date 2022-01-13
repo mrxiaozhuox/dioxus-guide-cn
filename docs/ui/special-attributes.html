@@ -37,4 +37,48 @@
 <blockquote>
 <p>请一定要注意：<code>dangerous_inner_html</code> 的使用非常危险，因为它无法直接的防止注入攻击（XSS）所以说，请确保您传入的 HTML 是安全的。
 否则直接使用所造成的问题是不可逆的，它非常危险！！</p>
-</blockquote></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%8E%9F%E7%94%9Fhtml">原生HTML</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>
+</blockquote>
+<h2 id="%E5%B8%83%E5%B0%94%E5%B1%9E%E6%80%A7">布尔属性<a class="anchor" href="#%E5%B8%83%E5%B0%94%E5%B1%9E%E6%80%A7">§</a></h2>
+<p>大多数属性都是 <code>K = V</code> 的结构，但是 HTML 中也有一些特殊的属性，它们的值为 Boolean 类型。
+比如说我们最常用的 hidden 属性，它会隐藏这个标签的显示。比如说这样的一个 Demo 代码：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+    div <span class="token punctuation">{</span>
+        hidden<span class="token punctuation">:</span> <span class="token string">"false"</span><span class="token punctuation">,</span>
+        <span class="token string">"hello"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>它的 HTML 结果为：</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span> 
+</code></pre>
+<p>最终并不会包含 <code>hidden</code> 属性，因为它的值为 <code>false</code>，除了 <code>false</code> 的所有值都为 <code>true</code> 。</p>
+<p>以下是我们整理出的 Boolean 属性列表（只有它们支持 Boolean 设置）：</p>
+<ul>
+<li>allowfullscreen</li>
+<li>allowpaymentrequest</li>
+<li>async</li>
+<li>autofocus</li>
+<li>autoplay</li>
+<li>checked</li>
+<li>controls</li>
+<li>default</li>
+<li>defer</li>
+<li>disabled</li>
+<li>formnovalidate</li>
+<li>hidden</li>
+<li>ismap</li>
+<li>itemscope</li>
+<li>loop</li>
+<li>multiple</li>
+<li>muted</li>
+<li>nomodule</li>
+<li>novalidate</li>
+<li>open</li>
+<li>playsinline</li>
+<li>readonly</li>
+<li>required</li>
+<li>reversed</li>
+<li>selected</li>
+<li>truespeed</li>
+</ul>
+<p>对于任何其他属性，<code>false</code> 的值将被直接发送到 DOM。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%8E%9F%E7%94%9Fhtml">原生HTML</a></li><li><a href="#%E5%B8%83%E5%B0%94%E5%B1%9E%E6%80%A7">布尔属性</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

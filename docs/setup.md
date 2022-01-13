@@ -33,3 +33,14 @@ cargo install --force dioxus-cli
 - [cargo edit](https://github.com/killercup/cargo-edit) - 通过命令添加包依赖项
 - [cargo-expand](https://github.com/dtolnay/cargo-expand) - 获得宏展开的调用代码
 - [cargo tree](https://doc.rust-lang.org/cargo/commands/cargo-tree.html) - 检查项目的依赖树关系
+
+## Rust 语言知识
+
+在使用 `Dioxus` 之前，您应该先去学习 Rust 语言的基础，否则啥都做不了。
+
+中文学习资源：
+
+- [Rust 程序设计语言](https://rustwiki.org/zh-CN/book)
+- [通过例子学 Rust](https://rustwiki.org/zh-CN/rust-by-example)
+- [Cargo 手册](https://rustwiki.org/zh-CN/cargo)
+- [Rust 规范文档](https://rustwiki.org/wiki)

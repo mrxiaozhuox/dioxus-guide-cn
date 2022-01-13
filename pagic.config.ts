@@ -20,6 +20,10 @@ export default {
                 text: '安装',
                 link: "/docs/setup.html",
             },
+            {
+                text: '入门',
+                link: "/docs/hello-world.html",
+            },
         ]
     },
 };

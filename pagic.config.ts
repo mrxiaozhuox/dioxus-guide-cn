@@ -35,6 +35,14 @@ export default {
                     {
                         text: "条件渲染",
                         link: "/docs/ui/conditional-render.html"
+                    },
+                    {
+                        text: "列表渲染",
+                        link: "/docs/ui/lists.html"
+                    },
+                    {
+                        text: "特殊属性",
+                        link: "/docs/ui/special-attributes.html"
                     }
                 ],
             },

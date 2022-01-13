@@ -154,7 +154,7 @@ rsx!(
 ```rust
 rsx!(
     div {
-        onclick: move |_| log::debug!("div clicked!"),
+        onclick: move |_| log::debug!("Div 被点击了！"),
     }
 )
 ```

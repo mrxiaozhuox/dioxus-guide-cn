@@ -38,7 +38,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-13T14:07:17.000Z",
+    'date': "2022-01-13T16:06:02.000Z",
     'updated': null,
     'excerpt': "组件往往需要在不同的情况下渲染不同的内容到页面上，页面的内容并不是一成不变的。 我们常常需要根据不同的情况去渲染界面。 有条件的返回元素 在一些组件中，你可能需要在不同的判断语句下返回不同的 Element 元素，我们来完...",
     'cover': undefined,
@@ -67,6 +67,14 @@ export default {
                 {
                     "text": "条件渲染",
                     "link": "/docs/ui/conditional-render.html"
+                },
+                {
+                    "text": "列表渲染",
+                    "link": "/docs/ui/lists.html"
+                },
+                {
+                    "text": "特殊属性",
+                    "link": "/docs/ui/special-attributes.html"
                 }
             ]
         }

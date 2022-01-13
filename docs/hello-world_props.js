@@ -43,7 +43,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-13T14:07:17.000Z",
+    'date': "2022-01-13T16:06:02.000Z",
     'updated': null,
     'excerpt': "让我们通过一个简单的 Hello World 程序来学习 Dioxus 的基本使用吧！ 在本章节中，我们将讨论： - 通过 Cargo 创建一个新项目 - 添加 Dioxus 工具包到新项目中 - 启动属于我们的第一个 Dioxus 桌面程序 创建项目 首先，让我们...",
     'cover': "https://dioxuslabs.com/guide/images/helloworld.png",
@@ -72,6 +72,14 @@ export default {
                 {
                     "text": "条件渲染",
                     "link": "/docs/ui/conditional-render.html"
+                },
+                {
+                    "text": "列表渲染",
+                    "link": "/docs/ui/lists.html"
+                },
+                {
+                    "text": "特殊属性",
+                    "link": "/docs/ui/special-attributes.html"
                 }
             ]
         }

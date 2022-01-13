@@ -79,4 +79,29 @@ edition <span class="token operator">=</span> <span class="token string">"2018"<
     <span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p><img src="https://dioxuslabs.com/guide/images/helloworld.png" alt="HELLOWORLD_IMG"></p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">创建项目</a><ol><li><a href="#%E4%BB%A3%E7%A0%81%E7%9B%AE%E5%BD%95">代码目录</a></li><li><a href="#%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE">应用配置</a><ol></ol></li></ol></li><li><a href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-dioxus-%E9%A1%B9%E7%9B%AE">第一个 Dioxus 项目</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>
+<p>使用 <code>cargo run</code> 就能运行这个项目啦。
+不出意外的话，它是这个样子的：</p>
+<p><img src="https://dioxuslabs.com/guide/images/helloworld.png" alt="HELLOWORLD_IMG"></p>
+<h3 id="%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81">解析代码<a class="anchor" href="#%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81">§</a></h3>
+<p><code>use</code> 命令会将目标包中的模块中导入到本程序中，而上方代码则是将 <code>dioxus</code> 下的 <code>prelude</code> 中的内容全部引入文件。
+它包含了 <code>Dioxus</code> 项目中常用的所有功能。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">use</span> <span class="token namespace">dioxus<span class="token punctuation">::</span>prelude<span class="token punctuation">::</span></span><span class="token operator">*</span><span class="token punctuation">;</span>
+</code></pre>
+<p>这个初始化代码会在一个线程上启动Tokio运行时，您的代码将在这个线程上运行。
+然后，WebView 渲染器将在主线程上启动。此时主线程会被应用程序的事件循环阻塞。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token namespace">dioxus<span class="token punctuation">::</span>desktop<span class="token punctuation">::</span></span><span class="token function">launch</span><span class="token punctuation">(</span><span class="token class-name">App</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>最后，我们定义了一个组件。在 Dioxus 中每个组件都是一个函数，它会返回一个 Element 对象，用于最终渲染。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">App</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span> <span class="token punctuation">{</span>
+        div <span class="token punctuation">{</span> <span class="token string">"Hello, world!"</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>    
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="scope-%E5%AF%B9%E8%B1%A1">Scope 对象<a class="anchor" href="#scope-%E5%AF%B9%E8%B1%A1">§</a></h3>
+<p>Scope 对象来自 React ，在 React 中，你需要用钩子在渲染之间存储数据。
+然而，钩子依赖于全局变量，这使得它们很难在服务器呈现等多租户系统中集成。</p>
+<p>在 Dioxus 中，Scope 提供了显示的数据处理、获取等方法。它对外提供了渲染、数据获取等功能。</p>
+<p>但现在，您只需要知道我们使用 <code>cx.render()</code> 去渲染了一个页面。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">创建项目</a><ol><li><a href="#%E4%BB%A3%E7%A0%81%E7%9B%AE%E5%BD%95">代码目录</a></li><li><a href="#%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE">应用配置</a><ol></ol></li></ol></li><li><a href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-dioxus-%E9%A1%B9%E7%9B%AE">第一个 Dioxus 项目</a><ol><li><a href="#%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81">解析代码</a></li><li><a href="#scope-%E5%AF%B9%E8%B1%A1">Scope 对象</a></li></ol></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

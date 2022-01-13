@@ -32,3 +32,56 @@ fn BlogPost(cx: Scope) -> Element {
 
 > 请一定要注意：`dangerous_inner_html` 的使用非常危险，因为它无法直接的防止注入攻击（XSS）所以说，请确保您传入的 HTML 是安全的。
 > 否则直接使用所造成的问题是不可逆的，它非常危险！！
+
+## 布尔属性
+
+大多数属性都是 `K = V` 的结构，但是 HTML 中也有一些特殊的属性，它们的值为 Boolean 类型。
+比如说我们最常用的 hidden 属性，它会隐藏这个标签的显示。比如说这样的一个 Demo 代码：
+
+```rust
+rsx!{
+    div {
+        hidden: "false",
+        "hello"
+    }
+}
+```
+
+它的 HTML 结果为：
+
+```html
+<div>hello</div> 
+```
+
+最终并不会包含 `hidden` 属性，因为它的值为 `false`，除了 `false` 的所有值都为 `true` 。
+
+以下是我们整理出的 Boolean 属性列表（只有它们支持 Boolean 设置）：
+
+- allowfullscreen
+- allowpaymentrequest
+- async
+- autofocus
+- autoplay
+- checked
+- controls
+- default
+- defer
+- disabled
+- formnovalidate
+- hidden
+- ismap
+- itemscope
+- loop
+- multiple
+- muted
+- nomodule
+- novalidate
+- open
+- playsinline
+- readonly
+- required
+- reversed
+- selected
+- truespeed
+
+对于任何其他属性，`false` 的值将被直接发送到 DOM。

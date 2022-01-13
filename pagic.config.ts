@@ -1,7 +1,8 @@
 export default {
     title: "Dioxus 开发指南",
     theme: "docs",
-    plugin: ['sidebar'],
+    root: "/",
+    plugins: ['sidebar', 'prev_next'],
     github: "http://github.com/mrxiaozhuox/dioxus-guide-cn",
     nav: [
         {
@@ -11,7 +12,14 @@ export default {
     ],
     sidebar: {
         "/": [
-
+            {
+                text: '介绍',
+                link: 'README.md',
+            },
+            {
+                text: '安装',
+                link: "/docs/setup.html",
+            },
         ]
     },
 };

@@ -60,3 +60,39 @@ let contents = dioxus::ssr::render_vdom(&dom);
 ```
 
 我们不认为 SSR API 在未来会有太大的变化。
+
+一些 SSR 端的演示项目：
+
+- [官方网站](https://github.com/dioxusLabs/docsite)
+
+
+### Desktop 支持
+
+桌面端也是 Dioxus 生态中非常强大的一项，但与 Web 端相比，它所能做的还远远不够。
+目前，桌面应用使用 WebView 库渲染，但你的 Rust 代码依然是在本地系统运行的。
+这意味着部分浏览器 API 并不可用，所以说它并不能完全支持 Web 的功能。
+但是原生的系统 API 则是可以使用的（类似于 Websockets、文件系统等 ）
+
+一些 Desktop 端的演示项目：
+
+- [文件浏览器](https://github.com/DioxusLabs/example-projects/tree/master/file-explorer)
+- [WiFi 扫描器](https://github.com/DioxusLabs/example-projects/blob/master/wifi-scanner)
+
+![FE_IMG](https://github.com/DioxusLabs/example-projects/raw/master/file-explorer/image.png)
+
+
+### Mobile 支持
+
+移动端是目前 Dioxus 最有待提升的一项，它现在非常有很多问题需要处理。
+移动端应用使用 WebView 渲染，这意味着动画、透明和本地小部件目前是无法实现的。
+此外，iOS 是目前唯一支持的移动平台。( Dioxus 使用的 Rust 窗口库- tao -目前不支持Android。)
+
+#### 什么样的情况下您可以选择使用 Dioxus 开发移动端：
+
+如果您不关心 原生App 中类似于动画、透明、小组件等功能，而仅仅是 渲染/处理 一些简单的数据。
+那么您可以尝试使用 `Dioxus-Mobile` （我们希望它在后续能不断完善，越做越好！）
+
+一些 Mobile 端的演示项目：
+
+- [Todo App](https://github.com/DioxusLabs/example-projects/blob/master/ios_demo)
+

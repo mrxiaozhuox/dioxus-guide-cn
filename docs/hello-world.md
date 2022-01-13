@@ -102,4 +102,46 @@ fn App(cx: Scope) -> Element {
 }
 ```
 
+使用 `cargo run` 就能运行这个项目啦。
+不出意外的话，它是这个样子的：
+
 ![HELLOWORLD_IMG](https://dioxuslabs.com/guide/images/helloworld.png)
+
+### 解析代码
+
+`use` 命令会将目标包中的模块中导入到本程序中，而上方代码则是将 `dioxus` 下的 `prelude` 中的内容全部引入文件。
+它包含了 `Dioxus` 项目中常用的所有功能。
+
+```rust
+use dioxus::prelude::*;
+```
+
+这个初始化代码会在一个线程上启动Tokio运行时，您的代码将在这个线程上运行。
+然后，WebView 渲染器将在主线程上启动。此时主线程会被应用程序的事件循环阻塞。
+
+```rust
+fn main() {
+    dioxus::desktop::launch(App);
+}
+```
+
+最后，我们定义了一个组件。在 Dioxus 中每个组件都是一个函数，它会返回一个 Element 对象，用于最终渲染。
+
+```rust
+fn App(cx: Scope) -> Element {
+    cx.render(rsx! {
+        div { "Hello, world!" }
+    })    
+}
+```
+
+### Scope 对象
+
+Scope 对象来自 React ，在 React 中，你需要用钩子在渲染之间存储数据。
+然而，钩子依赖于全局变量，这使得它们很难在服务器呈现等多租户系统中集成。
+
+
+在 Dioxus 中，Scope 提供了显示的数据处理、获取等方法。它对外提供了渲染、数据获取等功能。
+
+但现在，您只需要知道我们使用 `cx.render()` 去渲染了一个页面。
+

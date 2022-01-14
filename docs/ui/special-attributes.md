@@ -85,3 +85,102 @@ rsx!{
 - truespeed
 
 对于任何其他属性，`false` 的值将被直接发送到 DOM。
+
+## 拦截默认事件
+
+`prevent_default` 属性将会对默认的事件处理进行拦截，可用于拦截表单的提交之类的。
+
+```rust
+rsx!{
+    input {
+        oninput: move |_| {},
+        prevent_default: "oninput",
+
+        onclick: move |_| {},
+        prevent_default: "onclick",
+    }
+}
+```
+
+
+## 传递属性到子元素
+
+就像 Dioxus 支持将 道具 拓展到组件中一样，我们也支持将 属性 扩展到组件中。
+这允许您将任意属性通过 道具 传递到元素中。
+
+```rust
+#[derive(Props)]
+pub struct InputProps<'a> {
+    pub children: Element<'a>,
+    pub attributes: Attribute<'a>
+}
+
+pub fn StateInput<'a>(cx: Scope<'a, InputProps<'a>>) -> Element {
+    cx.render(rsx! (
+        input {
+            ..cx.props.attributes,
+            &cx.props.children,
+        }
+    ))
+}
+```
+> 请注意：这个特性将在 v0.1.8 版本实现。
+
+
+## 控制表单的特殊属性
+
+在 Dioxus 我们如何实现所谓的 `双向绑定` 呢？
+
+双向绑定指的不单单是页面会根据后端变量值实时更新前端数据，也可以在前端的编辑操作下更新后端变量值。
+比如说当一个输入框更新了数据，则同时更新后端变量值：
+
+```rust
+let value = use_state(&cx, || String::from("hello world"));
+
+rsx! {
+    input {
+        oninput: move |evt| value.set(evt.value.clone()),
+        value: "{value}",
+    }
+}
+```
+
+在上方演示中，输入框便编辑后，回调函数会自动更新 value 的值。
+
+
+```rust
+// 这是一个更直观的演示代码
+let value = use_state(&cx, || String::from("hello world"));
+
+rsx! {
+    input {
+        oninput: move |evt| value.set(evt.value.clone()),
+        value: "{value}",
+    }
+    p { "Input Value: {value}" }
+}
+```
+
+在上方代码中，当输入框的内容被改变，`P` 标签内容也会随之改变。
+
+
+## Javascript 代码事件
+
+如果您希望在 onclick 等事件中运行 JS 代码，你可以直接传递一个 JS 代码字符串：
+
+```
+rsx!{
+    div {
+        // 使用 Rust 处理
+        oninput: move |_| {},
+
+        // 使用 Javascript 处理
+        oninput: "alert('hello world')",
+    }
+}
+```
+
+当然，这里也有一个简单的封装库可以实现 JS 代码调用：[YuKun-Liu/Golde](https://github.com/mrxiaozhuox/golde) 
+而这个库我们将在后面的第三方包内容中讲到。
+
+到此，UI设计方向的内容我们算是讲解完毕了，接下来我们会进入组件封装的内容。

@@ -40,7 +40,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-13T23:13:19.000Z",
+    'date': "2022-01-14T03:35:46.000Z",
     'updated': null,
     'excerpt': "Dioxus 是一款用于构建跨平台用户界面的框架（生态系统），它使用 Rust 编程语言。 这本指南将带领你学习并使用它。（我们会尝试在 网页端、移动端、桌面端 使用 Dixous 框架） fn App(cx: Scope) -> Element { let mut count ...",
     'cover': "https://dioxuslabs.com/guide/images/dioxuslogo_full.png",
@@ -79,6 +79,11 @@ export default {
                     "link": "/docs/ui/special-attributes.html"
                 }
             ]
+        },
+        {
+            "text": "组件封装",
+            "link": "/docs/components/index.html",
+            "children": []
         }
     ]
 };

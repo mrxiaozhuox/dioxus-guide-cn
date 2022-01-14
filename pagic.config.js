@@ -10,6 +10,11 @@ export default {
             link: "https://dioxuslabs.com/",
         }
     ],
+    branch: "main",
+    tools: {
+        // editOnGitHub: true,
+        backToTop: true,
+    },
     sidebar: {
         "/": [
             {
@@ -46,6 +51,11 @@ export default {
                     }
                 ],
             },
+            {
+                text: "组件封装",
+                link: "/docs/components/index.html",
+                children: []
+            }
         ]
     },
 };

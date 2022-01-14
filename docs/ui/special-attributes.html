@@ -9,7 +9,7 @@
       document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
     }
   </script>
-</head><body><header><h1 class="hide_on_mobile"><a href="/">Dioxus 开发指南</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Dioxus 开发指南</a></h1></li><li class="hide_on_mobile"><a href="https://dioxuslabs.com/">官网</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="http://github.com/mrxiaozhuox/dioxus-guide-cn" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class=""><a href="/index.html" class="nav_link">介绍</a></li><li class=""><a href="/docs/setup.html" class="nav_link">安装</a></li><li class=""><a href="/docs/hello-world.html" class="nav_link">入门</a></li><li class="unfold"><a href="/docs/ui/index.html" class="nav_link">UI设计<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/ui/vnodes.html" class="nav_link">元素介绍</a></li><li class=""><a href="/docs/ui/conditional-render.html" class="nav_link">条件渲染</a></li><li class=""><a href="/docs/ui/lists.html" class="nav_link">列表渲染</a></li><li class=""><a href="/docs/ui/special-attributes.html" class="nav_link">特殊属性</a></li></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>特殊属性</h1>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Dioxus 开发指南</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Dioxus 开发指南</a></h1></li><li class="hide_on_mobile"><a href="https://dioxuslabs.com/">官网</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="http://github.com/mrxiaozhuox/dioxus-guide-cn" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class=""><a href="/index.html" class="nav_link">介绍</a></li><li class=""><a href="/docs/setup.html" class="nav_link">安装</a></li><li class=""><a href="/docs/hello-world.html" class="nav_link">入门</a></li><li class="unfold"><a href="/docs/ui/index.html" class="nav_link">UI设计<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/ui/vnodes.html" class="nav_link">元素介绍</a></li><li class=""><a href="/docs/ui/conditional-render.html" class="nav_link">条件渲染</a></li><li class=""><a href="/docs/ui/lists.html" class="nav_link">列表渲染</a></li><li class=""><a href="/docs/ui/special-attributes.html" class="nav_link">特殊属性</a></li></ol></li><li class="unfold"><a href="/docs/components/index.html" class="nav_link">组件封装<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>特殊属性</h1>
 <p>在这一章节中，我们需要了解 Dioxus 的特殊类型：</p>
 <ul>
 <li>dangerous_inner_html</li>
@@ -81,4 +81,78 @@
 <li>selected</li>
 <li>truespeed</li>
 </ul>
-<p>对于任何其他属性，<code>false</code> 的值将被直接发送到 DOM。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%8E%9F%E7%94%9Fhtml">原生HTML</a></li><li><a href="#%E5%B8%83%E5%B0%94%E5%B1%9E%E6%80%A7">布尔属性</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>
+<p>对于任何其他属性，<code>false</code> 的值将被直接发送到 DOM。</p>
+<h2 id="%E6%8B%A6%E6%88%AA%E9%BB%98%E8%AE%A4%E4%BA%8B%E4%BB%B6">拦截默认事件<a class="anchor" href="#%E6%8B%A6%E6%88%AA%E9%BB%98%E8%AE%A4%E4%BA%8B%E4%BB%B6">§</a></h2>
+<p><code>prevent_default</code> 属性将会对默认的事件处理进行拦截，可用于拦截表单的提交之类的。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+    input <span class="token punctuation">{</span>
+        oninput<span class="token punctuation">:</span> <span class="token keyword">move</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        prevent_default<span class="token punctuation">:</span> <span class="token string">"oninput"</span><span class="token punctuation">,</span>
+
+        onclick<span class="token punctuation">:</span> <span class="token keyword">move</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        prevent_default<span class="token punctuation">:</span> <span class="token string">"onclick"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7%E5%88%B0%E5%AD%90%E5%85%83%E7%B4%A0">传递属性到子元素<a class="anchor" href="#%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7%E5%88%B0%E5%AD%90%E5%85%83%E7%B4%A0">§</a></h2>
+<p>就像 Dioxus 支持将 道具 拓展到组件中一样，我们也支持将 属性 扩展到组件中。
+这允许您将任意属性通过 道具 传递到元素中。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props)]</span>
+<span class="token keyword">pub</span> <span class="token keyword">struct</span> <span class="token type-definition class-name">InputProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">pub</span> children<span class="token punctuation">:</span> <span class="token class-name">Element</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span><span class="token punctuation">,</span>
+    <span class="token keyword">pub</span> attributes<span class="token punctuation">:</span> <span class="token class-name">Attribute</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">pub</span> <span class="token keyword">fn</span> <span class="token function-definition function">StateInput</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token punctuation">,</span> <span class="token class-name">InputProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">>></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span> <span class="token punctuation">(</span>
+        input <span class="token punctuation">{</span>
+            <span class="token punctuation">..</span>cx<span class="token punctuation">.</span>props<span class="token punctuation">.</span>attributes<span class="token punctuation">,</span>
+            <span class="token operator">&amp;</span>cx<span class="token punctuation">.</span>props<span class="token punctuation">.</span>children<span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>请注意：这个特性将在 v0.1.8 版本实现。</p>
+</blockquote>
+<h2 id="%E6%8E%A7%E5%88%B6%E8%A1%A8%E5%8D%95%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%9E%E6%80%A7">控制表单的特殊属性<a class="anchor" href="#%E6%8E%A7%E5%88%B6%E8%A1%A8%E5%8D%95%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%9E%E6%80%A7">§</a></h2>
+<p>在 Dioxus 我们如何实现所谓的 <code>双向绑定</code> 呢？</p>
+<p>双向绑定指的不单单是页面会根据后端变量值实时更新前端数据，也可以在前端的编辑操作下更新后端变量值。
+比如说当一个输入框更新了数据，则同时更新后端变量值：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> value <span class="token operator">=</span> <span class="token function">use_state</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cx<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"hello world"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property">rsx!</span> <span class="token punctuation">{</span>
+    input <span class="token punctuation">{</span>
+        oninput<span class="token punctuation">:</span> <span class="token keyword">move</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>evt<span class="token closure-punctuation punctuation">|</span></span> value<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>evt<span class="token punctuation">.</span>value<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        value<span class="token punctuation">:</span> <span class="token string">"{value}"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>在上方演示中，输入框便编辑后，回调函数会自动更新 value 的值。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token comment">// 这是一个更直观的演示代码</span>
+<span class="token keyword">let</span> value <span class="token operator">=</span> <span class="token function">use_state</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cx<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"hello world"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property">rsx!</span> <span class="token punctuation">{</span>
+    input <span class="token punctuation">{</span>
+        oninput<span class="token punctuation">:</span> <span class="token keyword">move</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>evt<span class="token closure-punctuation punctuation">|</span></span> value<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>evt<span class="token punctuation">.</span>value<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        value<span class="token punctuation">:</span> <span class="token string">"{value}"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+    p <span class="token punctuation">{</span> <span class="token string">"Input Value: {value}"</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>在上方代码中，当输入框的内容被改变，<code>P</code> 标签内容也会随之改变。</p>
+<h2 id="javascript-%E4%BB%A3%E7%A0%81%E4%BA%8B%E4%BB%B6">Javascript 代码事件<a class="anchor" href="#javascript-%E4%BB%A3%E7%A0%81%E4%BA%8B%E4%BB%B6">§</a></h2>
+<p>如果您希望在 onclick 等事件中运行 JS 代码，你可以直接传递一个 JS 代码字符串：</p>
+<pre class="language-autoit"><code class="language-autoit">rsx!{
+    div {
+        <span class="token operator">/</span><span class="token operator">/</span> 使用 Rust 处理
+        oninput<span class="token punctuation">:</span> move |_| {}<span class="token punctuation">,</span>
+
+        <span class="token operator">/</span><span class="token operator">/</span> 使用 Javascript 处理
+        oninput<span class="token punctuation">:</span> <span class="token string">"alert('hello world')"</span><span class="token punctuation">,</span>
+    }
+}
+</code></pre>
+<p>当然，这里也有一个简单的封装库可以实现 JS 代码调用：<a href="https://github.com/mrxiaozhuox/golde">YuKun-Liu/Golde</a>
+而这个库我们将在后面的第三方包内容中讲到。</p>
+<p>到此，UI设计方向的内容我们算是讲解完毕了，接下来我们会进入组件封装的内容。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%8E%9F%E7%94%9Fhtml">原生HTML</a></li><li><a href="#%E5%B8%83%E5%B0%94%E5%B1%9E%E6%80%A7">布尔属性</a></li><li><a href="#%E6%8B%A6%E6%88%AA%E9%BB%98%E8%AE%A4%E4%BA%8B%E4%BB%B6">拦截默认事件</a></li><li><a href="#%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7%E5%88%B0%E5%AD%90%E5%85%83%E7%B4%A0">传递属性到子元素</a></li><li><a href="#%E6%8E%A7%E5%88%B6%E8%A1%A8%E5%8D%95%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%9E%E6%80%A7">控制表单的特殊属性</a></li><li><a href="#javascript-%E4%BB%A3%E7%A0%81%E4%BA%8B%E4%BB%B6">Javascript 代码事件</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

@@ -38,7 +38,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-13T23:13:19.000Z",
+    'date': "2022-01-14T03:35:46.000Z",
     'updated': null,
     'excerpt': "在本章中，我们将安装 Rust 编程语言与 Dioxus 配套工具。 Rust 语言安装 安装 Dioxus 安装完成后，如果你打算将应用部署到 Web 上，请确保将 wasm32-unknown-unknown 作为运行目标。 rustup target add wasm32-unknown-unknow...",
     'cover': undefined,
@@ -77,6 +77,11 @@ export default {
                     "link": "/docs/ui/special-attributes.html"
                 }
             ]
+        },
+        {
+            "text": "组件封装",
+            "link": "/docs/components/index.html",
+            "children": []
         }
     ]
 };

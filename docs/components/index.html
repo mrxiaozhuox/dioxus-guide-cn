@@ -1,0 +1,131 @@
+<!doctype html><html class="" data-reactroot=""><head>
+<meta data-react-helmet="true" charset="utf-8"/><meta data-react-helmet="true" http-equiv="x-ua-compatible" content="ie=edge"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1"/><meta data-react-helmet="true" property="og:title" content="组件介绍 · Dioxus 开发指南"/><meta data-react-helmet="true" property="og:type" content="article"/><meta data-react-helmet="true" name="twitter:card" content="summary"/>
+<title data-react-helmet="true">组件介绍 · Dioxus 开发指南</title>
+<link data-react-helmet="true" rel="stylesheet" href="/assets/index.css"/><link data-react-helmet="true" id="prismTheme" rel="stylesheet" href="/assets/prism.css"/>
+<script data-react-helmet="true" >
+    const shouldSetIsDark = document.cookie.includes('is_dark=1') ? true : document.cookie.includes('is_dark=0') ? false : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (shouldSetIsDark) {
+      document.documentElement.classList.add('is_dark');
+      document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
+    }
+  </script>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Dioxus 开发指南</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Dioxus 开发指南</a></h1></li><li class="hide_on_mobile"><a href="https://dioxuslabs.com/">官网</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="http://github.com/mrxiaozhuox/dioxus-guide-cn" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class=""><a href="/index.html" class="nav_link">介绍</a></li><li class=""><a href="/docs/setup.html" class="nav_link">安装</a></li><li class=""><a href="/docs/hello-world.html" class="nav_link">入门</a></li><li class="unfold"><a href="/docs/ui/index.html" class="nav_link">UI设计<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/ui/vnodes.html" class="nav_link">元素介绍</a></li><li class=""><a href="/docs/ui/conditional-render.html" class="nav_link">条件渲染</a></li><li class=""><a href="/docs/ui/lists.html" class="nav_link">列表渲染</a></li><li class=""><a href="/docs/ui/special-attributes.html" class="nav_link">特殊属性</a></li></ol></li><li class="unfold"><a href="/docs/components/index.html" class="nav_link">组件封装<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>组件介绍</h1>
+<p>在上一章节中，我们简单的介绍了 <code>元素</code> 的使用以及如何构造一个简单的 UI 页面。</p>
+<p>在这一大章中，我们会学习：</p>
+<ul>
+<li>如何完成一个组件</li>
+<li>如何对组件进行建模</li>
+<li>如何 “模块化（声明式）的思考”</li>
+</ul>
+<h2 id="%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%84%E4%BB%B6">什么是组件？<a class="anchor" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%84%E4%BB%B6">§</a></h2>
+<p>简单来说，组件就是将一种独特的功能封装为函数，根据不同的输入进行结果 <code>元素</code> 的输出。
+（它就像函数一样，根据输入内容，返回不同的输出结果，且它是可以复用的）</p>
+<h3 id="%E4%BB%8E%E7%8E%B0%E6%9C%89%E5%86%85%E5%AE%B9%E4%B8%AD%E5%AF%BB%E6%89%BE%E7%81%B5%E6%84%9F">从现有内容中寻找灵感<a class="anchor" href="#%E4%BB%8E%E7%8E%B0%E6%9C%89%E5%86%85%E5%AE%B9%E4%B8%AD%E5%AF%BB%E6%89%BE%E7%81%B5%E6%84%9F">§</a></h3>
+<p>下图来源于知乎的推荐页面：</p>
+<p><img src="../../assets/components_zhihu_demo.png" alt="ZHIHU"></p>
+<p>知乎的页面本质上就一个列表，每个列表项里展示为你推荐的一个内容，那我们来解析下里面包含的内容：</p>
+<ul>
+<li>标题</li>
+<li>作者</li>
+<li>大致内容</li>
+<li>赞同数量</li>
+<li>一堆按钮</li>
+</ul>
+<p>我们尝试为它封装一个 <code>结构体(struct)</code> ：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">struct</span> <span class="token type-definition class-name">PostData</span> <span class="token punctuation">{</span>
+    titile<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+    author<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+    content<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+    like_num<span class="token punctuation">:</span> <span class="token keyword">i32</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>在上方结构体中我们不需要考虑 按钮 ，因为它并不是一个变化的值。</p>
+</blockquote>
+<h3 id="%E4%B8%BA-dioxus-%E5%BB%BA%E6%A8%A1">为 Dioxus 建模<a class="anchor" href="#%E4%B8%BA-dioxus-%E5%BB%BA%E6%A8%A1">§</a></h3>
+<p>要想将上面的结构体作为 <code>道具</code> 使用，我们只需要为它添加一个 trait ：<code>Props</code></p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props, PartialEq)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">PostProps</span> <span class="token punctuation">{</span>
+    titile<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+    author<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+    content<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+    like_num<span class="token punctuation">:</span> <span class="token keyword">i32</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>接下来我们编写组件的主体函数：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">Post</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">PostProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+        div <span class="token punctuation">{</span>
+            h3 <span class="token punctuation">{</span> <span class="token string">"{cx.props.title}"</span> <span class="token punctuation">}</span>
+            p <span class="token punctuation">{</span> <span class="token string">"{cx.props.author}: {cx.props.content}"</span> <span class="token punctuation">}</span>
+            <span class="token class-name">ButtonGroup</span> <span class="token punctuation">{</span> like_number<span class="token punctuation">:</span> cx<span class="token punctuation">.</span>props<span class="token punctuation">.</span>like_num <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>上面的代码大致能渲染出那种效果（当然这只是模拟，不可能一模一样）</p>
+<p>我们需要注意的是这个 <code>ButtonGroup</code> ，它也是一个我们封装的组件，接受一个 <code>like_number</code> 的道具参数。
+它用来模拟下面的几个按钮，接受 <code>like_num</code> 则是为了打印 点赞数量。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props, PartialEq)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">ButtonGroupProps</span> <span class="token punctuation">{</span>
+    like_number<span class="token punctuation">:</span> <span class="token keyword">i32</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">ButtonGroup</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">ButtonGroupProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+        div <span class="token punctuation">{</span>
+            class<span class="token punctuation">:</span> <span class="token string">"button-group"</span><span class="token punctuation">,</span>
+            button <span class="token punctuation">{</span>
+                background_color<span class="token punctuation">:</span> <span class="token string">"blue"</span><span class="token punctuation">,</span>
+                onclick<span class="token punctuation">:</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span> <span class="token comment">/** 处理点击事件 **/</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token string">"↑ 赞同 {cx.props.like_number}"</span>
+            <span class="token punctuation">}</span>
+            button <span class="token punctuation">{</span>
+                onclick<span class="token punctuation">:</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span> <span class="token comment">/** 处理点击事件 **/</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token string">"↓"</span>
+            <span class="token punctuation">}</span>
+            button <span class="token punctuation">{</span>
+                onclick<span class="token punctuation">:</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span> <span class="token comment">/** 处理点击事件 **/</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token string">"添加评论"</span>
+            <span class="token punctuation">}</span>
+            button <span class="token punctuation">{</span>
+                onclick<span class="token punctuation">:</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span> <span class="token comment">/** 处理点击事件 **/</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token string">"分享"</span>
+            <span class="token punctuation">}</span>
+            button <span class="token punctuation">{</span>
+                onclick<span class="token punctuation">:</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span> <span class="token comment">/** 处理点击事件 **/</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token string">"收藏"</span>
+            <span class="token punctuation">}</span>
+            button <span class="token punctuation">{</span>
+                onclick<span class="token punctuation">:</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span> <span class="token comment">/** 处理点击事件 **/</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token string">"喜欢"</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="%E5%80%9F%E7%94%A8%E5%8F%98%E9%87%8F">借用变量<a class="anchor" href="#%E5%80%9F%E7%94%A8%E5%8F%98%E9%87%8F">§</a></h2>
+<p>如果我们使用的是借用变量，如 <code>&amp;str</code> 而非 <code>String</code>，我们只需要为 <code>Props</code> 结构添加生命周期。</p>
+<pre class="language-autoit"><code class="language-autoit">#<span class="token punctuation">[</span><span class="token function">derive</span><span class="token punctuation">(</span>Props<span class="token punctuation">)</span><span class="token punctuation">]</span>
+struct TitleCardProps<span class="token operator">&lt;</span>'a<span class="token operator">></span> {
+    title<span class="token punctuation">:</span> <span class="token operator">&amp;</span>'a str<span class="token punctuation">,</span>
+}
+
+fn TitleCard<span class="token operator">&lt;</span><span class="token string">'a>(cx: Scope&lt;'</span>a<span class="token punctuation">,</span> TitleCardProps<span class="token operator">&lt;</span>'a<span class="token operator">></span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Element {
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>rsx!{
+        h1 { <span class="token string">"{cx.props.title}"</span> }
+    }<span class="token punctuation">)</span>
+}  
+</code></pre>
+<p>使用引用可以减少对象被 <code>Clone</code> 的花销。</p>
+<h3 id="scope-%E5%AF%B9%E8%B1%A1">Scope 对象<a class="anchor" href="#scope-%E5%AF%B9%E8%B1%A1">§</a></h3>
+<p>虽然 Dioxus 在很多方面和 React 相似，但是也有一些特性上也有所不同。
+比如在组件声明中 React 没有 Scope 这一变量。</p>
+<p>在没有 <code>this</code> 指向当前对象时，<code>useState()</code> 似乎无法完成工作。
+React 使用全局变量来存储此信息。
+全局可变变量必须仔细管理，但在 Rust 程序中通常不鼓励这样做。
+所以说 Dioxus 需要 Scope 来维护一些内容和功能：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">Post</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">PostProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%84%E4%BB%B6">什么是组件？</a><ol><li><a href="#%E4%BB%8E%E7%8E%B0%E6%9C%89%E5%86%85%E5%AE%B9%E4%B8%AD%E5%AF%BB%E6%89%BE%E7%81%B5%E6%84%9F">从现有内容中寻找灵感</a></li><li><a href="#%E4%B8%BA-dioxus-%E5%BB%BA%E6%A8%A1">为 Dioxus 建模</a></li></ol></li><li><a href="#%E5%80%9F%E7%94%A8%E5%8F%98%E9%87%8F">借用变量</a><ol><li><a href="#scope-%E5%AF%B9%E8%B1%A1">Scope 对象</a></li></ol></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

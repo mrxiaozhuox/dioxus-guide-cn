@@ -54,7 +54,12 @@ export default {
             {
                 text: "组件封装",
                 link: "/docs/components/index.html",
-                children: []
+                children: [
+                    {
+                        text: "组件属性",
+                        link: "/docs/components/properties.html"
+                    }
+                ]
             }
         ]
     },

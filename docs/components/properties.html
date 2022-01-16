@@ -1,0 +1,124 @@
+<!doctype html><html class="" data-reactroot=""><head>
+<meta data-react-helmet="true" charset="utf-8"/><meta data-react-helmet="true" http-equiv="x-ua-compatible" content="ie=edge"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1"/><meta data-react-helmet="true" property="og:title" content="组件属性 · Dioxus 开发指南"/><meta data-react-helmet="true" property="og:type" content="article"/><meta data-react-helmet="true" name="twitter:card" content="summary"/>
+<title data-react-helmet="true">组件属性 · Dioxus 开发指南</title>
+<link data-react-helmet="true" rel="stylesheet" href="/assets/index.css"/><link data-react-helmet="true" id="prismTheme" rel="stylesheet" href="/assets/prism.css"/>
+<script data-react-helmet="true" >
+    const shouldSetIsDark = document.cookie.includes('is_dark=1') ? true : document.cookie.includes('is_dark=0') ? false : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (shouldSetIsDark) {
+      document.documentElement.classList.add('is_dark');
+      document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
+    }
+  </script>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Dioxus 开发指南</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Dioxus 开发指南</a></h1></li><li class="hide_on_mobile"><a href="https://dioxuslabs.com/">官网</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="http://github.com/mrxiaozhuox/dioxus-guide-cn" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class=""><a href="/index.html" class="nav_link">介绍</a></li><li class=""><a href="/docs/setup.html" class="nav_link">安装</a></li><li class=""><a href="/docs/hello-world.html" class="nav_link">入门</a></li><li class="unfold"><a href="/docs/ui/index.html" class="nav_link">UI设计<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/ui/vnodes.html" class="nav_link">元素介绍</a></li><li class=""><a href="/docs/ui/conditional-render.html" class="nav_link">条件渲染</a></li><li class=""><a href="/docs/ui/lists.html" class="nav_link">列表渲染</a></li><li class=""><a href="/docs/ui/special-attributes.html" class="nav_link">特殊属性</a></li></ol></li><li class="unfold"><a href="/docs/components/index.html" class="nav_link">组件封装<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/components/properties.html" class="nav_link">组件属性</a></li></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>组件属性</h1>
+<p>所有用于组件的属性都必须 <code>Properties</code> 特征，而 <code>Props</code> 派生宏则可以自动实现它。</p>
+<p>在本章中我们会了解到：</p>
+<ul>
+<li>使用 Props 宏</li>
+<li>记忆 Memoization</li>
+<li>可选的属性</li>
+<li>Inline_props 宏</li>
+</ul>
+<h2 id="%E4%BD%BF%E7%94%A8-props-%E5%AE%8F">使用 Props 宏<a class="anchor" href="#%E4%BD%BF%E7%94%A8-props-%E5%AE%8F">§</a></h2>
+<p>默认的 <code>Scope</code> 不包含任何数据：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token comment">// 这是一个不包含任何属性的 Scope</span>
+<span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span>
+<span class="token comment">// 它和上面的不包含数据的 Scope 相等</span>
+<span class="token class-name">Scope</span>
+</code></pre>
+<p>接下来我们定义一个 <code>Props</code>，你需要声明一个结构体，并为它添加派生宏。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">MyProps</span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token class-name">String</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>上方的代码并不能被编译，因为结构体中没有任何借用，那则需要实现 <code>PartialEq</code> 。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props, PartialEq)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">MyProps</span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token class-name">String</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>或者包含借用的：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">MyProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token lifetime-annotation symbol">'a</span> <span class="token keyword">str</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<p>接下来我们将 <code>MyProps</code> 引入到我们的组件中，并使用它：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">Demo</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">MyProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token macro property">todo!</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>如果是包含借用的：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">Demo</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token punctuation">,</span> <span class="token class-name">MyProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">>></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token macro property">todo!</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="%E8%AE%B0%E5%BF%86-memoization">记忆 Memoization<a class="anchor" href="#%E8%AE%B0%E5%BF%86-memoization">§</a></h2>
+<p>如果您来自 React 框架，那么您应该会蛮好奇我们是怎么处理 <code>Memoization</code> 的：</p>
+<blockquote>
+<p>Memoization: 一种在数据被更新时，重新渲染页面的优化技术。
+当页面被频繁刷新时，性能和用户体验都会大大降低，这时候就需要一些方法来完成优化。</p>
+</blockquote>
+<p>当一个属性被更改，但它并不会影响到输出内容，那我们便不会刷新页面渲染。</p>
+<p>比如：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">Demo</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> name <span class="token operator">=</span> <span class="token function">use_state</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cx<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"bob"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> age <span class="token operator">=</span> <span class="token function">use_state</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cx<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token number">21</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+        <span class="token class-name">Name</span> <span class="token punctuation">{</span> name<span class="token punctuation">:</span> name <span class="token punctuation">}</span>
+        <span class="token class-name">Age</span> <span class="token punctuation">{</span> age<span class="token punctuation">:</span> age <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>当 <code>Name</code> 被改变时，我们没必要对 <code>Age</code> 也进行刷新，因为它的属性没有任何变化，所以说刷新它只会造成无用的开销。</p>
+<p>关于 <code>Memoization</code> 在什么时候有效：
+当结构体实现了 <code>PartialEq</code> 时，它会被优化，但是如果结构中包含任何引用，则组件无法被优化，因为我们无法判断引用的 子/父 组件的更新状态。</p>
+<h2 id="%E5%8F%AF%E9%80%89%E5%B1%9E%E6%80%A7">可选属性<a class="anchor" href="#%E5%8F%AF%E9%80%89%E5%B1%9E%E6%80%A7">§</a></h2>
+<p>我们可以为 Dioxus 定义可选的属性（因为在部分情况下，有一些属性可以包含默认值）Dioxus 在这方面的设计借鉴了：<a href="https://github.com/idanarye/rust-typed-builder">Rust-Typed-Builder</a> 的设计。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props, PartialEq)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">MyProps</span> <span class="token punctuation">{</span>
+    
+    name<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+
+    <span class="token attribute attr-name">#[props(optional)]</span>
+    description<span class="token punctuation">:</span> <span class="token class-name">Option</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token operator">></span>
+
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">Demo</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">MyProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>可选属性：数据类型必须包含 <code>Default</code> 特征，在没有被赋值的时候，会为默认值。</p>
+<p><code>optional</code> 修饰符包含了两个独立的修饰符 <code>default</code> 和 <code>strip_option</code> 。</p>
+<p>以下是完整的修饰符列表：</p>
+<ul>
+<li><strong>default</strong> - 当属性没有填写时，赋予它默认值。</li>
+<li><strong>strip_option</strong> - 自动包装 Some 数据。</li>
+<li><strong>optional</strong> - 同时包含了 <em><strong>default</strong></em> 和 <strong>strip_option</strong> 修饰符。</li>
+<li><strong>into</strong> - 在调用时自动调用 <strong>into()</strong> 函数。</li>
+</ul>
+<h2 id="inline_props-%E5%AE%8F">inline_props 宏<a class="anchor" href="#inline_props-%E5%AE%8F">§</a></h2>
+<p>我们提供了 <code>inline_props</code> 宏，它将允许你在函数参数中设置 <code>Props</code> 。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props, PartialEq)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">TitleCardProps</span> <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">TitleCard</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">TitleCardProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+        h1 <span class="token punctuation">{</span> <span class="token string">"{cx.props.title}"</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>   
+</code></pre>
+<p>也可以写成这样:</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[inline_props]</span>
+<span class="token keyword">fn</span> <span class="token function-definition function">TitleCard</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">,</span> title<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+        h1 <span class="token punctuation">{</span> <span class="token string">"{title}"</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>  
+</code></pre>
+<p>我们认为库作者不应该在项目中使用这个宏，因为它无法实现 <code>可选</code> 功能，同时你无法更好的为组件编写文档。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E4%BD%BF%E7%94%A8-props-%E5%AE%8F">使用 Props 宏</a></li><li><a href="#%E8%AE%B0%E5%BF%86-memoization">记忆 Memoization</a></li><li><a href="#%E5%8F%AF%E9%80%89%E5%B1%9E%E6%80%A7">可选属性</a></li><li><a href="#inline_props-%E5%AE%8F">inline_props 宏</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

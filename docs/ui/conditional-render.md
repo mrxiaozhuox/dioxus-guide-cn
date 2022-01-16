@@ -17,7 +17,7 @@ struct AppProps {
 }
 ```
 
-我们在 `道具(Props)` 中定义了一个是否登陆的 Bool 值，它将用于判断我们的登陆状态。
+我们在 `Props` 中定义了一个是否登陆的 Bool 值，它将用于判断我们的登陆状态。
 
 ```rust
 fn App(cx: Scope<AppProps>) -> Element {
@@ -33,7 +33,7 @@ fn App(cx: Scope<AppProps>) -> Element {
 }
 ```
 
-在上方代码中，我们判断了道具中 `logged_in` 变量的状态，并返回了相应的自定义组件渲染。
+在上方代码中，我们判断了 Props 中 `logged_in` 变量的状态，并返回了相应的自定义组件渲染。
 
 > 自定义组件将在后续内容中讲解到。
 

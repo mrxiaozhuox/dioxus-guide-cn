@@ -42,7 +42,7 @@ struct PostData {
 
 ### 为 Dioxus 建模
 
-要想将上面的结构体作为 `道具` 使用，我们只需要为它添加一个 trait ：`Props`
+要想将上面的结构体作为 `Props` 使用，我们只需要为它添加一个 trait ：`Props`
 
 ```rust
 #[derive(Props, PartialEq)]
@@ -70,7 +70,7 @@ fn Post(cx: Scope<PostProps>) -> Element {
 
 上面的代码大致能渲染出那种效果（当然这只是模拟，不可能一模一样）
 
-我们需要注意的是这个 `ButtonGroup` ，它也是一个我们封装的组件，接受一个 `like_number` 的道具参数。
+我们需要注意的是这个 `ButtonGroup` ，它也是一个我们封装的组件，接受一个 `like_number` 的 `Props` 参数。
 它用来模拟下面的几个按钮，接受 `like_num` 则是为了打印 点赞数量。
 
 ```rust

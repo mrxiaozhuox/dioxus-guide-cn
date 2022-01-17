@@ -87,4 +87,44 @@ Hook 是一系列特殊的函数，它在组件的内存中保留一个状态槽
     original_poster<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"google"</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p>接下来我们将深入研究这些钩子的工作原理。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-state">什么是 State</a></li><li><a href="#%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0-state">如何更新 State</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>
+<h2 id="%E4%BD%95%E6%97%B6%E6%9B%B4%E6%96%B0-state">何时更新 State<a class="anchor" href="#%E4%BD%95%E6%97%B6%E6%9B%B4%E6%96%B0-state">§</a></h2>
+<p>有几种不同的情况下你可以更新状态：你可以在响应用户操作时更新，或在一些后台异步操作被完成后。</p>
+<h3 id="%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6">监听事件<a class="anchor" href="#%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6">§</a></h3>
+<p>我们可以在响应用户操作时更新数据，也就是在监听器中实现更新代码。</p>
+<p>比如说我们希望在按钮被按下后随机生成一篇文章：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">App</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">)</span><span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> post <span class="token operator">=</span> <span class="token function">use_state</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cx<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token class-name">PostData</span><span class="token punctuation">::</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+        button <span class="token punctuation">{</span>
+            on_click<span class="token punctuation">:</span> <span class="token keyword">move</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>_<span class="token closure-punctuation punctuation">|</span></span> post<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token class-name">PostData</span><span class="token punctuation">::</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token string">"Generate a random post"</span>
+        <span class="token punctuation">}</span>
+        <span class="token class-name">Post</span> <span class="token punctuation">{</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>post <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>   
+<span class="token punctuation">}</span>
+</code></pre>
+<p>这样当按钮 <code>onclick</code> 触发后，会对 <code>post</code> 进行更新。</p>
+<h3 id="%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1">异步任务<a class="anchor" href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1">§</a></h3>
+<p>我们也可以在一个协程的执行程序内部进行数据更新，协程就是一个定义的异步代码块。
+它能够与组件中的值、钩子和其他数据干净地交互。
+由于协程其中的数据必须在 'static 生命周期有效。
+所以我们必须显式地声明我们的任务将依赖哪些值，以避免在 React 中常见的道具过时问题。</p>
+<p>我们可以在组件中使用任务来构建一个计时的微型秒表。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">App</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">)</span><span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> <span class="token keyword">mut</span> sec_elapsed <span class="token operator">=</span> <span class="token function">use_state</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cx<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">use_future</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cx<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> <span class="token keyword">mut</span> sec_elapsed <span class="token operator">=</span> sec_elapsed<span class="token punctuation">.</span><span class="token function">for_async</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">async</span> <span class="token keyword">move</span> <span class="token punctuation">{</span>
+            <span class="token keyword">loop</span> <span class="token punctuation">{</span>
+                <span class="token class-name">TimeoutFuture</span><span class="token punctuation">::</span><span class="token function">from_ms</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">await</span><span class="token punctuation">;</span>
+                sec_elapsed <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token macro property">rsx!</span><span class="token punctuation">(</span>cx<span class="token punctuation">,</span> div <span class="token punctuation">{</span> <span class="token string">"Current stopwatch time: {sec_elapsed}"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>使用异步代码可能很麻烦！后续我们有一整个章节是关于如何在 Dioxus 应用程序中正确使用异步的。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-state">什么是 State</a></li><li><a href="#%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0-state">如何更新 State</a></li><li><a href="#%E4%BD%95%E6%97%B6%E6%9B%B4%E6%96%B0-state">何时更新 State</a><ol><li><a href="#%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6">监听事件</a></li><li><a href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1">异步任务</a></li></ol></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

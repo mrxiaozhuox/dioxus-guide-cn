@@ -37,7 +37,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-16T16:41:44.000Z",
+    'date': "2022-01-17T04:20:06.000Z",
     'updated': null,
     'excerpt': "有什么我们需要将同一组件渲染多次，那我们就可以把它当成一个列表来渲染。 通过列表渲染 想想我们常用的一些网站：类似于知乎，在主页中会有很多条同样的 文章 块。 它看起来就是这样的：每一个 Post 组件包含了具体内容，但是...",
     'cover': undefined,
@@ -84,6 +84,10 @@ export default {
                 {
                     "text": "组件属性",
                     "link": "/docs/components/properties.html"
+                },
+                {
+                    "text": "传递子元素和属性",
+                    "link": "/docs/components/children-attributes.html"
                 }
             ]
         }

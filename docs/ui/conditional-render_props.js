@@ -38,7 +38,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-16T16:41:44.000Z",
+    'date': "2022-01-17T04:20:06.000Z",
     'updated': null,
     'excerpt': "组件往往需要在不同的情况下渲染不同的内容到页面上，页面的内容并不是一成不变的。 我们常常需要根据不同的情况去渲染界面。 有条件的返回元素 在一些组件中，你可能需要在不同的判断语句下返回不同的 Element 元素，我们来完...",
     'cover': undefined,
@@ -85,6 +85,10 @@ export default {
                 {
                     "text": "组件属性",
                     "link": "/docs/components/properties.html"
+                },
+                {
+                    "text": "传递子元素和属性",
+                    "link": "/docs/components/children-attributes.html"
                 }
             ]
         }

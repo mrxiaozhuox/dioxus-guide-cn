@@ -40,7 +40,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-16T16:41:44.000Z",
+    'date': "2022-01-17T04:20:06.000Z",
     'updated': null,
     'excerpt': "在这一章节中，我们需要了解 Dioxus 的特殊类型： - dangerous_inner_html - boolean attributes - prevent_default - ..attributes - event handlers as string attributes - value checked and selected 原生HTML 在 React 中...",
     'cover': undefined,
@@ -87,6 +87,10 @@ export default {
                 {
                     "text": "组件属性",
                     "link": "/docs/components/properties.html"
+                },
+                {
+                    "text": "传递子元素和属性",
+                    "link": "/docs/components/children-attributes.html"
                 }
             ]
         }

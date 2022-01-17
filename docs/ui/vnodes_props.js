@@ -38,7 +38,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-16T16:41:44.000Z",
+    'date': "2022-01-17T04:20:06.000Z",
     'updated': null,
     'excerpt': "每一个 用户UI 都是由多个元素交叉组织而成，一堆堆元素组成了一切复杂的应用程序界面。 在 Dioxus 中，我们可以使用组件来包装元素，再将组件当成一个更到的元素。 这样一层一层的包裹，便形成了最终的应用程序！ 声明元素 Di...",
     'cover': undefined,
@@ -85,6 +85,10 @@ export default {
                 {
                     "text": "组件属性",
                     "link": "/docs/components/properties.html"
+                },
+                {
+                    "text": "传递子元素和属性",
+                    "link": "/docs/components/children-attributes.html"
                 }
             ]
         }

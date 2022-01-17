@@ -40,7 +40,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-16T16:41:44.000Z",
+    'date': "2022-01-17T04:20:06.000Z",
     'updated': null,
     'excerpt': "在上一章节中，我们简单的介绍了 元素 的使用以及如何构造一个简单的 UI 页面。 在这一大章中，我们会学习： - 如何完成一个组件 - 如何对组件进行建模 - 如何 “模块化（声明式）的思考” 什么是组件？ 简单来说，组件就是将一...",
     'cover': "../../assets/components_zhihu_demo.png",
@@ -87,6 +87,10 @@ export default {
                 {
                     "text": "组件属性",
                     "link": "/docs/components/properties.html"
+                },
+                {
+                    "text": "传递子元素和属性",
+                    "link": "/docs/components/children-attributes.html"
                 }
             ]
         }

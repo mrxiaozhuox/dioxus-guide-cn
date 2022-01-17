@@ -1,0 +1,129 @@
+<!doctype html><html class="" data-reactroot=""><head>
+<meta data-react-helmet="true" charset="utf-8"/><meta data-react-helmet="true" http-equiv="x-ua-compatible" content="ie=edge"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1"/><meta data-react-helmet="true" property="og:title" content="传递子元素和属性 · Dioxus 开发指南"/><meta data-react-helmet="true" property="og:type" content="article"/><meta data-react-helmet="true" name="twitter:card" content="summary"/>
+<title data-react-helmet="true">传递子元素和属性 · Dioxus 开发指南</title>
+<link data-react-helmet="true" rel="stylesheet" href="/assets/index.css"/><link data-react-helmet="true" id="prismTheme" rel="stylesheet" href="/assets/prism.css"/>
+<script data-react-helmet="true" >
+    const shouldSetIsDark = document.cookie.includes('is_dark=1') ? true : document.cookie.includes('is_dark=0') ? false : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (shouldSetIsDark) {
+      document.documentElement.classList.add('is_dark');
+      document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
+    }
+  </script>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Dioxus 开发指南</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Dioxus 开发指南</a></h1></li><li class="hide_on_mobile"><a href="https://dioxuslabs.com/">官网</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="http://github.com/mrxiaozhuox/dioxus-guide-cn" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class=""><a href="/index.html" class="nav_link">介绍</a></li><li class=""><a href="/docs/setup.html" class="nav_link">安装</a></li><li class=""><a href="/docs/hello-world.html" class="nav_link">入门</a></li><li class="unfold"><a href="/docs/ui/index.html" class="nav_link">UI设计<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/ui/vnodes.html" class="nav_link">元素介绍</a></li><li class=""><a href="/docs/ui/conditional-render.html" class="nav_link">条件渲染</a></li><li class=""><a href="/docs/ui/lists.html" class="nav_link">列表渲染</a></li><li class=""><a href="/docs/ui/special-attributes.html" class="nav_link">特殊属性</a></li></ol></li><li class="unfold"><a href="/docs/components/index.html" class="nav_link">组件封装<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/components/properties.html" class="nav_link">组件属性</a></li><li class=""><a href="/docs/components/children-attributes.html" class="nav_link">传递子元素和属性</a></li></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>传递子元素和属性</h1>
+<p>有时候，您会希望将一些重要的功能封装在您的状态中，而不是直接嵌套在另一个组件中。
+在这些情况下，您需要将元素和属性传递到组件中，并让组件适当地放置它们。</p>
+<p>本章我们主要会了解到：</p>
+<ul>
+<li>传递子元素到组件。</li>
+<li>传递属性到组件。</li>
+</ul>
+<h2 id="%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5">使用情况<a class="anchor" href="#%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5">§</a></h2>
+<p>假设你正在构建一个网站，你需要对一个 <code>&lt;a&gt;</code> 标签进行封装：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    a <span class="token punctuation">{</span>
+        href<span class="token punctuation">:</span> <span class="token string">"<a class="token url-link" href="https://google.com">https://google.com</a>"</span>
+        <span class="token string">"Link to google"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>如果你需要把 <code>a</code> 标签封装成一个组件：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">ClickableProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    href<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token lifetime-annotation symbol">'a</span> <span class="token keyword">str</span><span class="token punctuation">,</span>
+    title<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token lifetime-annotation symbol">'a</span> <span class="token keyword">str</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">Clickable</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">ClickableProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+        a <span class="token punctuation">{</span>
+            href<span class="token punctuation">:</span> <span class="token string">"{cx.props.href}"</span>
+            <span class="token string">"{cx.props.title}"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>接下来你可以这么使用它：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    <span class="token class-name">Clickable</span> <span class="token punctuation">{</span>
+        href<span class="token punctuation">:</span> <span class="token string">"<a class="token url-link" href="https://google.com">https://google.com</a>"</span>
+        title<span class="token punctuation">:</span> <span class="token string">"Link to Google"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<h2 id="%E4%BC%A0%E9%80%92%E5%AD%90%E5%85%83%E7%B4%A0">传递子元素<a class="anchor" href="#%E4%BC%A0%E9%80%92%E5%AD%90%E5%85%83%E7%B4%A0">§</a></h2>
+<p>如果我们希望在我们的组件内可以嵌入其他子 元素/组件，那我们只需要定义一个类型为 Element 的道具：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">ClickableProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    href<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token lifetime-annotation symbol">'a</span> <span class="token keyword">str</span><span class="token punctuation">,</span>
+    body<span class="token punctuation">:</span> <span class="token class-name">Element</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">Clickable</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">ClickableProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+        a <span class="token punctuation">{</span>
+            href<span class="token punctuation">:</span> <span class="token string">"{cx.props.href}"</span><span class="token punctuation">,</span>
+            <span class="token operator">&amp;</span>cx<span class="token punctuation">.</span>props<span class="token punctuation">.</span>body
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>使用它：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    <span class="token class-name">Clickable</span> <span class="token punctuation">{</span>
+        href<span class="token punctuation">:</span> <span class="token string">"<a class="token url-link" href="https://google.com">https://google.com</a>"</span>
+        body<span class="token punctuation">:</span> cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+            img <span class="token punctuation">{</span> src<span class="token punctuation">:</span> <span class="token string">"<a class="token url-link" href="https://www.google.com/logos/doodles/...">https://www.google.com/logos/doodles/...</a>"</span> <span class="token punctuation">}</span>
+        <span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<h2 id="children-%E7%89%B9%E6%AE%8A%E9%A1%B9"><code>Children</code> 特殊项<a class="anchor" href="#children-%E7%89%B9%E6%AE%8A%E9%A1%B9">§</a></h2>
+<p>上面所介绍的在 <code>Props</code> 中嵌入一个子元素有时候使用起来并不方便，所以我们还内置了 <code>Children</code> 这种属性：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">ClickableProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    href<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token lifetime-annotation symbol">'a</span> <span class="token keyword">str</span><span class="token punctuation">,</span>
+    children<span class="token punctuation">:</span> <span class="token class-name">Element</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">clickable</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">ClickableProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+        a <span class="token punctuation">{</span>
+            href<span class="token punctuation">:</span> <span class="token string">"{cx.props.href}"</span><span class="token punctuation">,</span>
+            <span class="token operator">&amp;</span>cx<span class="token punctuation">.</span>props<span class="token punctuation">.</span>children
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>使用它则会方便很多：</p>
+<pre class="language-autoit"><code class="language-autoit">rsx!<span class="token punctuation">(</span>
+    Clickable {
+        href<span class="token punctuation">:</span> <span class="token string">"<a class="token url-link" href="https://google.com">https://google.com</a>"</span>
+        img { src<span class="token punctuation">:</span> <span class="token string">"<a class="token url-link" href="https://www.google.com/logos/doodles/....">https://www.google.com/logos/doodles/....</a>"</span> }
+    }
+<span class="token punctuation">)</span>
+</code></pre>
+<p>它更像我们原生的 HTML 标签组件那种嵌入子元素了。</p>
+<h2 id="%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7">传递属性<a class="anchor" href="#%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7">§</a></h2>
+<p>你也可以将属性信息在 <code>Props</code> 中传递：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+    <span class="token class-name">Clickable</span> <span class="token punctuation">{</span>
+        <span class="token string">"class"</span><span class="token punctuation">:</span> <span class="token string">"blue-button"</span><span class="token punctuation">,</span>
+        <span class="token string">"style"</span><span class="token punctuation">:</span> <span class="token string">"background: red;"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre>
+<p>传递属性，你需要添加 <code>attributes</code> 字段：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props)]</span>
+<span class="token keyword">struct</span> <span class="token type-definition class-name">ClickableProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    attributes<span class="token punctuation">:</span> <span class="token class-name">Attributes</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function-definition function">clickable</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">ClickableProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">(</span>
+        a <span class="token punctuation">{</span> 
+            <span class="token punctuation">..</span>cx<span class="token punctuation">.</span>props<span class="token punctuation">.</span>attributes<span class="token punctuation">,</span>
+            <span class="token string">"Any link, anywhere"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5">使用情况</a></li><li><a href="#%E4%BC%A0%E9%80%92%E5%AD%90%E5%85%83%E7%B4%A0">传递子元素</a></li><li><a href="#children-%E7%89%B9%E6%AE%8A%E9%A1%B9">Children 特殊项</a></li><li><a href="#%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7">传递属性</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

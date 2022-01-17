@@ -58,6 +58,10 @@ export default {
                     {
                         text: "组件属性",
                         link: "/docs/components/properties.html"
+                    },
+                    {
+                        text: "传递子元素和属性",
+                        link: "/docs/components/children-attributes.html"
                     }
                 ]
             }

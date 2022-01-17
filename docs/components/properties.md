@@ -1,12 +1,12 @@
-# 组件属性
+# 组件道具
 
-所有用于组件的属性都必须 `Properties` 特征，而 `Props` 派生宏则可以自动实现它。
+所有用于组件的道具都必须 `Properties` 特征，而 `Props` 派生宏则可以自动实现它。
 
 在本章中我们会了解到：
 
 - 使用 Props 宏
 - 记忆 Memoization
-- 可选的属性
+- 可选的道具
 - Inline_props 宏
 
 ## 使用 Props 宏
@@ -14,7 +14,7 @@
 默认的 `Scope` 不包含任何数据：
 
 ```rust
-// 这是一个不包含任何属性的 Scope
+// 这是一个不包含任何道具的 Scope
 Scope<()>
 // 它和上面的不包含数据的 Scope 相等
 Scope
@@ -72,7 +72,7 @@ fn Demo<'a>(cx: Scope<'a, MyProps<'a>>) -> Element {
 > Memoization: 一种在数据被更新时，重新渲染页面的优化技术。
 > 当页面被频繁刷新时，性能和用户体验都会大大降低，这时候就需要一些方法来完成优化。
 
-当一个属性被更改，但它并不会影响到输出内容，那我们便不会刷新页面渲染。
+当一个道具值被更改，但它并不会影响到输出内容，那我们便不会刷新页面渲染。
 
 比如：
 
@@ -88,14 +88,14 @@ fn Demo(cx: Scope) -> Element {
 }
 ```
 
-当 `Name` 被改变时，我们没必要对 `Age` 也进行刷新，因为它的属性没有任何变化，所以说刷新它只会造成无用的开销。
+当 `Name` 被改变时，我们没必要对 `Age` 也进行刷新，因为它的内容没有任何变化，所以说刷新它只会造成无用的开销。
 
 关于 `Memoization` 在什么时候有效：
 当结构体实现了 `PartialEq` 时，它会被优化，但是如果结构中包含任何引用，则组件无法被优化，因为我们无法判断引用的 子/父 组件的更新状态。
 
-## 可选属性
+## 可选道具
 
-我们可以为 Dioxus 定义可选的属性（因为在部分情况下，有一些属性可以包含默认值）Dioxus 在这方面的设计借鉴了：[Rust-Typed-Builder](https://github.com/idanarye/rust-typed-builder) 的设计。
+我们可以为 Dioxus 定义可选的道具（因为在部分情况下，有一些道具可以包含默认值）Dioxus 在这方面的设计借鉴了：[Rust-Typed-Builder](https://github.com/idanarye/rust-typed-builder) 的设计。
 
 ```rust
 #[derive(Props, PartialEq)]
@@ -113,13 +113,13 @@ fn Demo(cx: Scope<MyProps>) -> Element {
 }
 ```
 
-可选属性：数据类型必须包含 `Default` 特征，在没有被赋值的时候，会为默认值。
+可选道具：数据类型必须包含 `Default` 特征，在没有被赋值的时候，会为默认值。
 
 `optional` 修饰符包含了两个独立的修饰符 `default` 和 `strip_option` 。
 
 以下是完整的修饰符列表：
 
-- **default** - 当属性没有填写时，赋予它默认值。
+- **default** - 当内容没有填写时，赋予它默认值。
 - **strip_option** - 自动包装 Some 数据。
 - **optional** - 同时包含了 ***default*** 和 **strip_option** 修饰符。
 - **into** - 在调用时自动调用 **into()** 函数。

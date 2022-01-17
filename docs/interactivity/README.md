@@ -100,4 +100,58 @@ post.set( PostData {
 });
 ```
 
-接下来我们将深入研究这些钩子的工作原理。
+## 何时更新 State
+
+有几种不同的情况下你可以更新状态：你可以在响应用户操作时更新，或在一些后台异步操作被完成后。
+
+### 监听事件
+
+我们可以在响应用户操作时更新数据，也就是在监听器中实现更新代码。
+
+比如说我们希望在按钮被按下后随机生成一篇文章：
+
+```rust
+fn App(cx: Scope)-> Element {
+    let post = use_state(&cx, || PostData::new());
+
+    cx.render(rsx!{
+        button {
+            on_click: move |_| post.set(PostData::random())
+            "Generate a random post"
+        }
+        Post { props: &post }
+    })   
+}
+```
+
+这样当按钮 `onclick` 触发后，会对 `post` 进行更新。
+
+
+### 异步任务
+
+我们也可以在一个协程的执行程序内部进行数据更新，协程就是一个定义的异步代码块。
+它能够与组件中的值、钩子和其他数据干净地交互。
+由于协程其中的数据必须在 'static 生命周期有效。
+所以我们必须显式地声明我们的任务将依赖哪些值，以避免在 React 中常见的道具过时问题。
+
+我们可以在组件中使用任务来构建一个计时的微型秒表。
+
+```rust
+fn App(cx: Scope)-> Element {
+    let mut sec_elapsed = use_state(&cx, || 0);
+
+    use_future(&cx, || {
+        let mut sec_elapsed = sec_elapsed.for_async();
+        async move {
+            loop {
+                TimeoutFuture::from_ms(1000).await;
+                sec_elapsed += 1;
+            }
+        }
+    });
+
+    rsx!(cx, div { "Current stopwatch time: {sec_elapsed}" })
+}
+```
+
+使用异步代码可能很麻烦！后续我们有一整个章节是关于如何在 Dioxus 应用程序中正确使用异步的。

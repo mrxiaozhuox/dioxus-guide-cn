@@ -60,13 +60,13 @@
 <span class="token macro property">rsx!</span><span class="token punctuation">(</span><span class="token string">"hello {name}"</span><span class="token punctuation">)</span>
 </code></pre>
 <p>上方代码会将 <code>name</code> 内容绑定到内容 <code>{name}</code> 中，类似于 Rust 的 <code>format!(&quot;{}&quot;, &quot;hi&quot;);</code></p>
-<p>但是您不能在字符串内部进行任何逻辑判断，或者完成调用方法之类的操作。但是我们可以使用：<code>format_args!()</code></p>
+<p>但是你不能在字符串内部进行任何逻辑判断，或者完成调用方法之类的操作。但是我们可以使用：<code>format_args!()</code></p>
 <pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span> <span class="token punctuation">{</span><span class="token macro property">format_args!</span><span class="token punctuation">(</span><span class="token string">"Hello {}"</span><span class="token punctuation">,</span> <span class="token keyword">if</span> enabled <span class="token punctuation">{</span> <span class="token string">"Jack"</span> <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token string">"Bob"</span> <span class="token punctuation">}</span> <span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
 </code></pre>
 <p>或者这样进行字符串拼接：</p>
 <pre class="language-rust"><code class="language-rust"><span class="token macro property">rsx!</span><span class="token punctuation">(</span> <span class="token string">"Hello "</span><span class="token punctuation">,</span>  <span class="token punctuation">[</span><span class="token keyword">if</span> enabled <span class="token punctuation">{</span> <span class="token string">"Jack"</span> <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token string">"Bob"</span> <span class="token punctuation">}</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
 </code></pre>
-<p>但是我们建议您在 <code>rsx!()</code> 外将字符串处理好，再输入到元素中。</p>
+<p>但是我们建议你在 <code>rsx!()</code> 外将字符串处理好，再输入到元素中。</p>
 <pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> name <span class="token operator">=</span> <span class="token keyword">if</span> enabled <span class="token punctuation">{</span> <span class="token string">"Jack"</span> <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token string">"Bob"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token macro property">rsx!</span> <span class="token punctuation">(</span> <span class="token string">"hello {name}"</span> <span class="token punctuation">)</span>
 </code></pre>

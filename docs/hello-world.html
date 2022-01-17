@@ -61,7 +61,7 @@ edition <span class="token operator">=</span> <span class="token string">"2018"<
 </code></pre>
 <p>它使用 <strong>TOML</strong> 格式，默认情况下没有任何依赖库。</p>
 <h4 id="%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%BA%93">添加依赖库<a class="anchor" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%BA%93">§</a></h4>
-<p>如果您已经安装了 <code>cargo-edit</code> 拓展命令，您可以很轻松的添加一个依赖到您的 <code>Cargo.toml</code> 中：</p>
+<p>如果你已经安装了 <code>cargo-edit</code> 拓展命令，你可以很轻松的添加一个依赖到你的 <code>Cargo.toml</code> 中：</p>
 <pre class="language-autoit"><code class="language-autoit">$ cargo add dioxus <span class="token operator">-</span><span class="token operator">-</span>features desktop
 </code></pre>
 <p>将 <code>features</code> desktop 引入项目中是非常重要的，<code>dioxus</code> 就像一个包装盒，里面有很多各种各样的支持 <code>Feature</code>。
@@ -87,7 +87,7 @@ edition <span class="token operator">=</span> <span class="token string">"2018"<
 它包含了 <code>Dioxus</code> 项目中常用的所有功能。</p>
 <pre class="language-rust"><code class="language-rust"><span class="token keyword">use</span> <span class="token namespace">dioxus<span class="token punctuation">::</span>prelude<span class="token punctuation">::</span></span><span class="token operator">*</span><span class="token punctuation">;</span>
 </code></pre>
-<p>这个初始化代码会在一个线程上启动Tokio运行时，您的代码将在这个线程上运行。
+<p>这个初始化代码会在一个线程上启动Tokio运行时，你的代码将在这个线程上运行。
 然后，WebView 渲染器将在主线程上启动。此时主线程会被应用程序的事件循环阻塞。</p>
 <pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token namespace">dioxus<span class="token punctuation">::</span>desktop<span class="token punctuation">::</span></span><span class="token function">launch</span><span class="token punctuation">(</span><span class="token class-name">App</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -104,4 +104,4 @@ edition <span class="token operator">=</span> <span class="token string">"2018"<
 <p>Scope 对象来自 React ，在 React 中，你需要用钩子在渲染之间存储数据。
 然而，钩子依赖于全局变量，这使得它们很难在服务器呈现等多租户系统中集成。</p>
 <p>在 Dioxus 中，Scope 提供了显示的数据处理、获取等方法。它对外提供了渲染、数据获取等功能。</p>
-<p>但现在，您只需要知道我们使用 <code>cx.render()</code> 去渲染了一个页面。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">创建项目</a><ol><li><a href="#%E4%BB%A3%E7%A0%81%E7%9B%AE%E5%BD%95">代码目录</a></li><li><a href="#%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE">应用配置</a><ol></ol></li></ol></li><li><a href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-dioxus-%E9%A1%B9%E7%9B%AE">第一个 Dioxus 项目</a><ol><li><a href="#%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81">解析代码</a></li><li><a href="#scope-%E5%AF%B9%E8%B1%A1">Scope 对象</a></li></ol></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>
+<p>但现在，你只需要知道我们使用 <code>cx.render()</code> 去渲染了一个页面。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">创建项目</a><ol><li><a href="#%E4%BB%A3%E7%A0%81%E7%9B%AE%E5%BD%95">代码目录</a></li><li><a href="#%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE">应用配置</a><ol></ol></li></ol></li><li><a href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-dioxus-%E9%A1%B9%E7%9B%AE">第一个 Dioxus 项目</a><ol><li><a href="#%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81">解析代码</a></li><li><a href="#scope-%E5%AF%B9%E8%B1%A1">Scope 对象</a></li></ol></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

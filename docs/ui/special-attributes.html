@@ -35,7 +35,7 @@
 </code></pre>
 <p>上方代码就相当于直接把 HTML 代码写入到这个 div 中去了。</p>
 <blockquote>
-<p>请一定要注意：<code>dangerous_inner_html</code> 的使用非常危险，因为它无法直接的防止注入攻击（XSS）所以说，请确保您传入的 HTML 是安全的。
+<p>请一定要注意：<code>dangerous_inner_html</code> 的使用非常危险，因为它无法直接的防止注入攻击（XSS）所以说，请确保你传入的 HTML 是安全的。
 否则直接使用所造成的问题是不可逆的，它非常危险！！</p>
 </blockquote>
 <h2 id="%E5%B8%83%E5%B0%94%E5%B1%9E%E6%80%A7">布尔属性<a class="anchor" href="#%E5%B8%83%E5%B0%94%E5%B1%9E%E6%80%A7">§</a></h2>
@@ -96,7 +96,7 @@
 </code></pre>
 <h2 id="%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7%E5%88%B0%E5%AD%90%E5%85%83%E7%B4%A0">传递属性到子元素<a class="anchor" href="#%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7%E5%88%B0%E5%AD%90%E5%85%83%E7%B4%A0">§</a></h2>
 <p>就像 Dioxus 支持将 <code>Props</code> 拓展到组件中一样，我们也支持将 属性 扩展到组件中。
-这允许您将任意属性通过 Props 传递到元素中。</p>
+这允许你将任意属性通过 Props 传递到元素中。</p>
 <pre class="language-rust"><code class="language-rust"><span class="token attribute attr-name">#[derive(Props)]</span>
 <span class="token keyword">pub</span> <span class="token keyword">struct</span> <span class="token type-definition class-name">InputProps</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">pub</span> children<span class="token punctuation">:</span> <span class="token class-name">Element</span><span class="token operator">&lt;</span><span class="token lifetime-annotation symbol">'a</span><span class="token operator">></span><span class="token punctuation">,</span>
@@ -142,7 +142,7 @@
 </code></pre>
 <p>在上方代码中，当输入框的内容被改变，<code>P</code> 标签内容也会随之改变。</p>
 <h2 id="javascript-%E4%BB%A3%E7%A0%81%E4%BA%8B%E4%BB%B6">Javascript 代码事件<a class="anchor" href="#javascript-%E4%BB%A3%E7%A0%81%E4%BA%8B%E4%BB%B6">§</a></h2>
-<p>如果您希望在 onclick 等事件中运行 JS 代码，你可以直接传递一个 JS 代码字符串：</p>
+<p>如果你希望在 onclick 等事件中运行 JS 代码，你可以直接传递一个 JS 代码字符串：</p>
 <pre class="language-autoit"><code class="language-autoit">rsx!{
     div {
         <span class="token operator">/</span><span class="token operator">/</span> 使用 Rust 处理

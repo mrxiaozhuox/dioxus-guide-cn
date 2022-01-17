@@ -23,7 +23,7 @@
     <span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
-<p>Dioxus 与 React 有许多的相似之处，如果本指南中有任何未阐述清楚的概念，您可以前往 React 文档中查询。
+<p>Dioxus 与 React 有许多的相似之处，如果本指南中有任何未阐述清楚的概念，你可以前往 React 文档中查询。
 我们致力于在 Rust 生态环境中构建一个令人熟悉的UI框架，如果你已经熟悉 React 了，那么 Dioxus 将对你来说非常的简单！
 （如果你是新手，这本指南同样适合你哦qwq）</p>
 <h2 id="%E5%A4%9A%E5%B9%B3%E5%8F%B0">多平台<a class="anchor" href="#%E5%A4%9A%E5%B9%B3%E5%8F%B0">§</a></h2>
@@ -39,7 +39,7 @@
 <li>TUI/Rink (用于制作终端程序)</li>
 </ul>
 <h3 id="web-%E6%94%AF%E6%8C%81">Web 支持<a class="anchor" href="#web-%E6%94%AF%E6%8C%81">§</a></h3>
-<p>网页端是 Dioxus 最为重要的支持平台，要想让您的项目能够在 Web 中运行，首先会将其编译为 <strong>WebAssembly</strong> 并启用 <code>Dioxus-Web</code> 功能。
+<p>网页端是 Dioxus 最为重要的支持平台，要想让你的项目能够在 Web 中运行，首先会将其编译为 <strong>WebAssembly</strong> 并启用 <code>Dioxus-Web</code> 功能。
 WASM 有很多系统限制，这导致你的代码不能包含任何原生的系统调用（计时器，IO 等）</p>
 <p>鉴于 Web 平台功能已经非常成熟了，所以说后期的 API 变化会很小。</p>
 <p>一些 Web 端的演示项目：</p>
@@ -50,7 +50,7 @@ WASM 有很多系统限制，这导致你的代码不能包含任何原生的系
 <p><img src="https://github.com/DioxusLabs/example-projects/raw/master/todomvc/example.png" alt="TODOMVC_IMG"></p>
 <h3 id="ssr-%E6%94%AF%E6%8C%81">SSR 支持<a class="anchor" href="#ssr-%E6%94%AF%E6%8C%81">§</a></h3>
 <p>Dioxus 支持 SSR 的服务端渲染。</p>
-<p>为了从 WebServer 渲染到静态文件 <code>.html</code>，您需要确保在 Dioxus 功能中启用了 SSR 特性。</p>
+<p>为了从 WebServer 渲染到静态文件 <code>.html</code>，你需要确保在 Dioxus 功能中启用了 SSR 特性。</p>
 <pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> contents <span class="token operator">=</span> <span class="token namespace">dioxus<span class="token punctuation">::</span>ssr<span class="token punctuation">::</span></span><span class="token function">render_vdom</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>dom<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>我们不认为 SSR API 在未来会有太大的变化。</p>
@@ -73,9 +73,9 @@ WASM 有很多系统限制，这导致你的代码不能包含任何原生的系
 <p>移动端是目前 Dioxus 最有待提升的一项，它现在非常有很多问题需要处理。
 移动端应用使用 WebView 渲染，这意味着动画、透明和本地小部件目前是无法实现的。
 此外，iOS 是目前唯一支持的移动平台。( Dioxus 使用的 Rust 窗口库- tao -目前不支持Android。)</p>
-<h4 id="%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E6%82%A8%E5%8F%AF%E4%BB%A5%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8-dioxus-%E5%BC%80%E5%8F%91%E7%A7%BB%E5%8A%A8%E7%AB%AF">什么样的情况下您可以选择使用 Dioxus 开发移动端：<a class="anchor" href="#%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E6%82%A8%E5%8F%AF%E4%BB%A5%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8-dioxus-%E5%BC%80%E5%8F%91%E7%A7%BB%E5%8A%A8%E7%AB%AF">§</a></h4>
-<p>如果您不关心 原生App 中类似于动画、透明、小组件等功能，而仅仅是 渲染/处理 一些简单的数据。
-那么您可以尝试使用 <code>Dioxus-Mobile</code> （我们希望它在后续能不断完善，越做越好！）</p>
+<h4 id="%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E4%BD%A0%E5%8F%AF%E4%BB%A5%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8-dioxus-%E5%BC%80%E5%8F%91%E7%A7%BB%E5%8A%A8%E7%AB%AF">什么样的情况下你可以选择使用 Dioxus 开发移动端：<a class="anchor" href="#%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E4%BD%A0%E5%8F%AF%E4%BB%A5%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8-dioxus-%E5%BC%80%E5%8F%91%E7%A7%BB%E5%8A%A8%E7%AB%AF">§</a></h4>
+<p>如果你不关心 原生App 中类似于动画、透明、小组件等功能，而仅仅是 渲染/处理 一些简单的数据。
+那么你可以尝试使用 <code>Dioxus-Mobile</code> （我们希望它在后续能不断完善，越做越好！）</p>
 <p>一些 Mobile 端的演示项目：</p>
 <ul>
 <li><a href="https://github.com/DioxusLabs/example-projects/blob/master/ios_demo">Todo App</a></li>

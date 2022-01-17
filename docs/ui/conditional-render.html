@@ -91,8 +91,8 @@ cx<span class="token punctuation">.</span><span class="token function">render</s
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre>
 <h2 id="%E5%B8%83%E5%B0%94%E6%98%A0%E5%B0%84">布尔映射<a class="anchor" href="#%E5%B8%83%E5%B0%94%E6%98%A0%E5%B0%84">§</a></h2>
-<p>我们建议您尝试有条件地 隐藏/显示 一个元素时使用 “布尔映射” 模式。</p>
-<p>Rust 允许您通过调用 <code>and_then()</code> 将任何布尔值转换为任何其他类型。我们可以在组件中通过映射到某些元素来利用这个功能。</p>
+<p>我们建议你尝试有条件地 隐藏/显示 一个元素时使用 “布尔映射” 模式。</p>
+<p>Rust 允许你通过调用 <code>and_then()</code> 将任何布尔值转换为任何其他类型。我们可以在组件中通过映射到某些元素来利用这个功能。</p>
 <pre class="language-rust"><code class="language-rust"><span class="token keyword">let</span> show_title <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token macro property">rsx!</span><span class="token punctuation">(</span>
     div <span class="token punctuation">{</span>

@@ -64,6 +64,11 @@ export default {
                         link: "/docs/components/children-attributes.html"
                     }
                 ]
+            },
+            {
+                text: "交互性",
+                link: "/docs/interactivity/index.html",
+                children: []
             }
         ]
     },

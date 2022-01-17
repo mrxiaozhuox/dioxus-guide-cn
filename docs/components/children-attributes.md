@@ -151,3 +151,32 @@ fn clickable(cx: Scope<ClickableProps>) -> Element {
 ```
 
 ## 传递处理器
+
+Dioxus 支持对 `on` 事件的传递，你可以为你的组件绑定各类事件：
+
+```rust
+#[derive(Props)]
+struct ClickableProps<'a> {
+    onclick: EventHandler<'a, MouseEvent>
+}
+
+fn clickable(cx: Scope<ClickableProps>) -> Element {
+    cx.render(rsx!(
+        a { 
+            onclick: move |evt| cx.props.onclick.call(evt)
+        }
+    ))
+}
+```
+
+我们可以在使用组件的时候这样绑定它：
+
+```rust
+rsx!(
+    Clickable {
+        onclick: move |_| log::info!("Clicked"),
+    }
+)
+```
+
+这样子当 `a` 标签被点击时，就会触发 `log::info!` 的功能。

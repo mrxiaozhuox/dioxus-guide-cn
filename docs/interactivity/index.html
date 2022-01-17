@@ -1,0 +1,90 @@
+<!doctype html><html class="" data-reactroot=""><head>
+<meta data-react-helmet="true" charset="utf-8"/><meta data-react-helmet="true" http-equiv="x-ua-compatible" content="ie=edge"/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1"/><meta data-react-helmet="true" property="og:title" content="交互性设计 · Dioxus 开发指南"/><meta data-react-helmet="true" property="og:type" content="article"/><meta data-react-helmet="true" name="twitter:card" content="summary"/>
+<title data-react-helmet="true">交互性设计 · Dioxus 开发指南</title>
+<link data-react-helmet="true" rel="stylesheet" href="/assets/index.css"/><link data-react-helmet="true" id="prismTheme" rel="stylesheet" href="/assets/prism.css"/>
+<script data-react-helmet="true" >
+    const shouldSetIsDark = document.cookie.includes('is_dark=1') ? true : document.cookie.includes('is_dark=0') ? false : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (shouldSetIsDark) {
+      document.documentElement.classList.add('is_dark');
+      document.getElementById('prismTheme').href = "/assets/prism_tomorrow.css";
+    }
+  </script>
+</head><body><header><h1 class="hide_on_mobile"><a href="/">Dioxus 开发指南</a></h1><nav><ul><li class="show_on_mobile flex_center"><a class="czs-menu-l" href="#" style="background-image:url(&quot;/assets/czs-menu-l.svg&quot;)"></a></li><li class="show_on_mobile"><h1 class="mobile_title"><a href="/">Dioxus 开发指南</a></h1></li><li class="hide_on_mobile"><a href="https://dioxuslabs.com/">官网</a></li><li style="flex-grow:1"></li><li class="flex_center"><a class="czs-github-logo" href="http://github.com/mrxiaozhuox/dioxus-guide-cn" target="_blank" style="background-image:url(&quot;/assets/czs-github-logo.svg&quot;)"></a></li><li class="toggle_dark flex_center"><span class="czs-sun" style="background-image:url(&quot;/assets/czs-sun.svg&quot;)"></span><span class="czs-sun-l" style="background-image:url(&quot;/assets/czs-sun-l.svg&quot;)"></span><span class="czs-moon" style="background-image:url(&quot;/assets/czs-moon.svg&quot;)"></span><span class="czs-moon-l" style="background-image:url(&quot;/assets/czs-moon-l.svg&quot;)"></span></li></ul></nav></header><aside class="sidebar"><ol class="list_style_none"><li class=""><a href="/index.html" class="nav_link">介绍</a></li><li class=""><a href="/docs/setup.html" class="nav_link">安装</a></li><li class=""><a href="/docs/hello-world.html" class="nav_link">入门</a></li><li class="unfold"><a href="/docs/ui/index.html" class="nav_link">UI设计<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/ui/vnodes.html" class="nav_link">元素介绍</a></li><li class=""><a href="/docs/ui/conditional-render.html" class="nav_link">条件渲染</a></li><li class=""><a href="/docs/ui/lists.html" class="nav_link">列表渲染</a></li><li class=""><a href="/docs/ui/special-attributes.html" class="nav_link">特殊属性</a></li></ol></li><li class="unfold"><a href="/docs/components/index.html" class="nav_link">组件封装<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"><li class=""><a href="/docs/components/properties.html" class="nav_link">组件属性</a></li><li class=""><a href="/docs/components/children-attributes.html" class="nav_link">传递子元素和属性</a></li></ol></li><li class="unfold"><a href="/docs/interactivity/index.html" class="nav_link">交互性<span class="czs-angle-up-l" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></span><span class="czs-angle-down-l" style="background-image:url(&quot;/assets/czs-angle-down-l.svg&quot;)"></span></a><ol class="list_style_none" style="height:auto"></ol></li></ol></aside><section class="main"><div class="main_article"><article><h1>交互性设计</h1>
+<p>至今我们已经学习了如何构造（包装）我们的程序了，但它现在仅仅是动态的，这没有任何意思。
+所以说在本大章中，我们会尝试让我们的项目 <strong>动起来</strong> ！</p>
+<p>在我们深入学习如何完成交互设计之前，我们先大致了解一下 Dioxus 是如何处理交互的吧。</p>
+<h2 id="%E4%BB%80%E4%B9%88%E6%98%AF-state">什么是 <code>State</code><a class="anchor" href="#%E4%BB%80%E4%B9%88%E6%98%AF-state">§</a></h2>
+<p>每一个应用都会呈现一些内容到UI界面上，Dioxus 框架需要负责就是将这些内容渲染到页面之中。
+而作为开发者的你，则需要为框架提供具体的数据内容。</p>
+<p>可以动态更新的数据内容在 Dioxus 中则称之为：<code>State</code></p>
+<p>如果使用 <code>dioxus::web::launch_with_props</code> 运行程序，那么你需要提供一个初始 <code>State</code>：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 声明初始化的 State</span>
+    <span class="token keyword">let</span> props <span class="token operator">=</span> <span class="token class-name">PostProps</span> <span class="token punctuation">{</span>
+        id<span class="token punctuation">:</span> <span class="token class-name">Uuid</span><span class="token punctuation">::</span><span class="token function">new_v4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        score<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+        comment_count<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        post_time<span class="token punctuation">:</span> <span class="token namespace">std<span class="token punctuation">::</span>time<span class="token punctuation">::</span></span><span class="token class-name">Instant</span><span class="token punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        url<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"dioxuslabs.com"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        title<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"Hello, world"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        original_poster<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"dioxus"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 启动 Dioxus 程序并传入 props</span>
+    <span class="token namespace">dioxus<span class="token punctuation">::</span>desktop<span class="token punctuation">::</span></span><span class="token function">launch_with_props</span><span class="token punctuation">(</span><span class="token class-name">App</span><span class="token punctuation">,</span> props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>它会向 <code>App</code> 传递一个 <strong>不可变</strong> 的 <code>PostProps</code>，你也可以将它继续向下级组件传递：</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">App</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token operator">&lt;</span><span class="token class-name">PostProps</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+        <span class="token class-name">Title</span> <span class="token punctuation">{</span> title<span class="token punctuation">:</span> <span class="token operator">&amp;</span>cx<span class="token punctuation">.</span>props<span class="token punctuation">.</span>title <span class="token punctuation">}</span>
+        <span class="token class-name">Score</span> <span class="token punctuation">{</span> score<span class="token punctuation">:</span> <span class="token operator">&amp;</span>cx<span class="token punctuation">.</span>props<span class="token punctuation">.</span>score <span class="token punctuation">}</span>
+        <span class="token comment">// etc</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Dioxus 对于 State 的设计遵循了：<code>单向数据流</code> 。
+当你的组件创建了子组件时，程序的结构最终会形成一个 “树” ，其中状态从 “根” 组件向下传递到树的 “叶” 。</p>
+<p><img src="../../assets/component_tree.png" alt="component_tree"></p>
+<p>在 Dioxus 中， State 总是从父组件流向子组件。</p>
+<h2 id="%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0-state">如何更新 <code>State</code><a class="anchor" href="#%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0-state">§</a></h2>
+<p>接下来我们需要了解如何对 <code>State</code> 数据进行更新。
+Dioxus 提供了好几种方法使得 <code>State</code> 能在运行时被更新。
+对于上面的 Demo 中定义的 <code>Root State</code>，我们可以直接使用：<code>update_root_props</code> 方法来更新。
+但是它会在只更新了其中一小部分文本和属性的情况下刷新我们整个应用程序的渲染树。（这往往都不是我们想要的）</p>
+<p>所以说在此时，我们需要用到一个叫 <code>Hook 钩子</code> 的东西，它会在你的组件内部存放数据，并使得这些数据 “从上往下” 的 “流动” 到子组件中。
+Hook 是一系列特殊的函数，它在组件的内存中保留一个状态槽，并提供一些功能来更新该状态。</p>
+<p>我们最常用的 <code>Hook</code> 便是函数 <code>use_state</code> ，它允许你存放数据到内部，并支持你对数据的更新编辑。</p>
+<pre class="language-rust"><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">App</span><span class="token punctuation">(</span>cx<span class="token punctuation">:</span> <span class="token class-name">Scope</span><span class="token punctuation">)</span><span class="token punctuation">-></span> <span class="token class-name">Element</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">let</span> post <span class="token operator">=</span> <span class="token function">use_state</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cx<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span><span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">{</span>
+        <span class="token class-name">PostData</span> <span class="token punctuation">{</span>
+            id<span class="token punctuation">:</span> <span class="token class-name">Uuid</span><span class="token punctuation">::</span><span class="token function">new_v4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            score<span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+            comment_count<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            post_time<span class="token punctuation">:</span> <span class="token namespace">std<span class="token punctuation">::</span>time<span class="token punctuation">::</span></span><span class="token class-name">Instant</span><span class="token punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            url<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"dioxuslabs.com"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            title<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"Hello, world"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            original_poster<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"dioxus"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>        
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    cx<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token macro property">rsx!</span><span class="token punctuation">{</span>
+        <span class="token class-name">Title</span> <span class="token punctuation">{</span> title<span class="token punctuation">:</span> <span class="token operator">&amp;</span>post<span class="token punctuation">.</span>title <span class="token punctuation">}</span>
+        <span class="token class-name">Score</span> <span class="token punctuation">{</span> score<span class="token punctuation">:</span> <span class="token operator">&amp;</span>post<span class="token punctuation">.</span>score <span class="token punctuation">}</span>
+        <span class="token comment">// etc</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>   
+<span class="token punctuation">}</span>
+</code></pre>
+<p>我们可以通过 <code>set</code> 方法直接更新它的值：</p>
+<pre class="language-rust"><code class="language-rust">post<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span> <span class="token class-name">PostData</span> <span class="token punctuation">{</span>
+    id<span class="token punctuation">:</span> <span class="token class-name">Uuid</span><span class="token punctuation">::</span><span class="token function">new_v4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    score<span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">,</span>
+    comment_count<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    post_time<span class="token punctuation">:</span> <span class="token namespace">std<span class="token punctuation">::</span>time<span class="token punctuation">::</span></span><span class="token class-name">Instant</span><span class="token punctuation">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    url<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"google.com"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    title<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"goodbye, world"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    original_poster<span class="token punctuation">:</span> <span class="token class-name">String</span><span class="token punctuation">::</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"google"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>接下来我们将深入研究这些钩子的工作原理。</p></article></div><aside class="main_toc_container nav_link_container"><div class="main_toc"><nav class="toc"><ol><li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-state">什么是 State</a></li><li><a href="#%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0-state">如何更新 State</a></li></ol></nav></div></aside></section><footer>Powered by&amp;nbsp;<a href="https://github.com/xcatliu/pagic" target="_blank">Pagic</a></footer><div class="tools flex_center hide_on_mobile"><a class="czs-angle-up-l button" href="#" style="background-image:url(&quot;/assets/czs-angle-up-l.svg&quot;)"></a></div><script src="https://cdn.pagic.org/react@17.0.2/umd/react.production.min.js"></script><script src="https://cdn.pagic.org/react-dom@17.0.2/umd/react-dom.production.min.js"></script><script type="module" src="/index.js"></script></body></html>

@@ -17,7 +17,7 @@ fn App(cx: Scope) -> Element {
 };
 ```
 
-Dioxus 与 React 有许多的相似之处，如果本指南中有任何未阐述清楚的概念，您可以前往 React 文档中查询。
+Dioxus 与 React 有许多的相似之处，如果本指南中有任何未阐述清楚的概念，你可以前往 React 文档中查询。
 我们致力于在 Rust 生态环境中构建一个令人熟悉的UI框架，如果你已经熟悉 React 了，那么 Dioxus 将对你来说非常的简单！
 （如果你是新手，这本指南同样适合你哦qwq）
 
@@ -37,7 +37,7 @@ Dioxus 与 React 有许多的相似之处，如果本指南中有任何未阐述
 
 ### Web 支持
 
-网页端是 Dioxus 最为重要的支持平台，要想让您的项目能够在 Web 中运行，首先会将其编译为 **WebAssembly** 并启用 `Dioxus-Web` 功能。
+网页端是 Dioxus 最为重要的支持平台，要想让你的项目能够在 Web 中运行，首先会将其编译为 **WebAssembly** 并启用 `Dioxus-Web` 功能。
 WASM 有很多系统限制，这导致你的代码不能包含任何原生的系统调用（计时器，IO 等）
 
 鉴于 Web 平台功能已经非常成熟了，所以说后期的 API 变化会很小。
@@ -53,7 +53,7 @@ WASM 有很多系统限制，这导致你的代码不能包含任何原生的系
 
 Dioxus 支持 SSR 的服务端渲染。
 
-为了从 WebServer 渲染到静态文件 `.html`，您需要确保在 Dioxus 功能中启用了 SSR 特性。
+为了从 WebServer 渲染到静态文件 `.html`，你需要确保在 Dioxus 功能中启用了 SSR 特性。
 
 ```rust
 let contents = dioxus::ssr::render_vdom(&dom);
@@ -87,10 +87,10 @@ let contents = dioxus::ssr::render_vdom(&dom);
 移动端应用使用 WebView 渲染，这意味着动画、透明和本地小部件目前是无法实现的。
 此外，iOS 是目前唯一支持的移动平台。( Dioxus 使用的 Rust 窗口库- tao -目前不支持Android。)
 
-#### 什么样的情况下您可以选择使用 Dioxus 开发移动端：
+#### 什么样的情况下你可以选择使用 Dioxus 开发移动端：
 
-如果您不关心 原生App 中类似于动画、透明、小组件等功能，而仅仅是 渲染/处理 一些简单的数据。
-那么您可以尝试使用 `Dioxus-Mobile` （我们希望它在后续能不断完善，越做越好！）
+如果你不关心 原生App 中类似于动画、透明、小组件等功能，而仅仅是 渲染/处理 一些简单的数据。
+那么你可以尝试使用 `Dioxus-Mobile` （我们希望它在后续能不断完善，越做越好！）
 
 一些 Mobile 端的演示项目：
 

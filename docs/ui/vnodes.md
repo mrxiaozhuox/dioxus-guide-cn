@@ -79,7 +79,7 @@ rsx!("hello {name}")
 
 上方代码会将 `name` 内容绑定到内容 `{name}` 中，类似于 Rust 的 `format!("{}", "hi");`
 
-但是您不能在字符串内部进行任何逻辑判断，或者完成调用方法之类的操作。但是我们可以使用：`format_args!()`
+但是你不能在字符串内部进行任何逻辑判断，或者完成调用方法之类的操作。但是我们可以使用：`format_args!()`
 
 ```rust
 rsx!( {format_args!("Hello {}", if enabled { "Jack" } else { "Bob" } )] )
@@ -91,7 +91,7 @@ rsx!( {format_args!("Hello {}", if enabled { "Jack" } else { "Bob" } )] )
 rsx!( "Hello ",  [if enabled { "Jack" } else { "Bob" }] )
 ```
 
-但是我们建议您在 `rsx!()` 外将字符串处理好，再输入到元素中。
+但是我们建议你在 `rsx!()` 外将字符串处理好，再输入到元素中。
 
 ```rust
 let name = if enabled { "Jack" } else { "Bob" };

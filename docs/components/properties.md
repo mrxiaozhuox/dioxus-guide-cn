@@ -67,7 +67,7 @@ fn Demo<'a>(cx: Scope<'a, MyProps<'a>>) -> Element {
 
 ## 记忆 Memoization
 
-如果您来自 React 框架，那么您应该会蛮好奇我们是怎么处理 `Memoization` 的：
+如果你来自 React 框架，那么你应该会蛮好奇我们是怎么处理 `Memoization` 的：
 
 > Memoization: 一种在数据被更新时，重新渲染页面的优化技术。
 > 当页面被频繁刷新时，性能和用户体验都会大大降低，这时候就需要一些方法来完成优化。

@@ -76,7 +76,7 @@ edition = "2018"
 
 #### 添加依赖库
 
-如果您已经安装了 `cargo-edit` 拓展命令，您可以很轻松的添加一个依赖到您的 `Cargo.toml` 中：
+如果你已经安装了 `cargo-edit` 拓展命令，你可以很轻松的添加一个依赖到你的 `Cargo.toml` 中：
 
 ```
 $ cargo add dioxus --features desktop
@@ -116,7 +116,7 @@ fn App(cx: Scope) -> Element {
 use dioxus::prelude::*;
 ```
 
-这个初始化代码会在一个线程上启动Tokio运行时，您的代码将在这个线程上运行。
+这个初始化代码会在一个线程上启动Tokio运行时，你的代码将在这个线程上运行。
 然后，WebView 渲染器将在主线程上启动。此时主线程会被应用程序的事件循环阻塞。
 
 ```rust
@@ -143,5 +143,5 @@ Scope 对象来自 React ，在 React 中，你需要用钩子在渲染之间存
 
 在 Dioxus 中，Scope 提供了显示的数据处理、获取等方法。它对外提供了渲染、数据获取等功能。
 
-但现在，您只需要知道我们使用 `cx.render()` 去渲染了一个页面。
+但现在，你只需要知道我们使用 `cx.render()` 去渲染了一个页面。
 

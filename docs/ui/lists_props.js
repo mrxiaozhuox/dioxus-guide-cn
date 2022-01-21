@@ -37,7 +37,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-17T17:05:53.000Z",
+    'date': "2022-01-21T12:32:13.000Z",
     'updated': null,
     'excerpt': "有什么我们需要将同一组件渲染多次，那我们就可以把它当成一个列表来渲染。 通过列表渲染 想想我们常用的一些网站：类似于知乎，在主页中会有很多条同样的 文章 块。 它看起来就是这样的：每一个 Post 组件包含了具体内容，但是...",
     'cover': undefined,
@@ -94,7 +94,12 @@ export default {
         {
             "text": "交互性",
             "link": "/docs/interactivity/index.html",
-            "children": []
+            "children": [
+                {
+                    "text": "钩子与内部状态",
+                    "link": "/docs/interactivity/hooks-state.html"
+                }
+            ]
         }
     ]
 };

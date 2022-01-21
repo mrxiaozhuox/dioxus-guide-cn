@@ -30,7 +30,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-17T17:05:53.000Z",
+    'date': "2022-01-21T12:32:13.000Z",
     'updated': null,
     'excerpt': "通过这章的学习，我们将学会如何通过 Dioxus 构建一个漂亮的 UI 界面！这一定很酷！ 声明式用户界面 Dioxus 是一个 声明式框架，这意味着我们不需要手动的 创建 元素和手动 设置 元素信息（通过函数调用）。 我们只需要对我们想...",
     'cover': undefined,
@@ -87,7 +87,12 @@ export default {
         {
             "text": "交互性",
             "link": "/docs/interactivity/index.html",
-            "children": []
+            "children": [
+                {
+                    "text": "钩子与内部状态",
+                    "link": "/docs/interactivity/hooks-state.html"
+                }
+            ]
         }
     ]
 };

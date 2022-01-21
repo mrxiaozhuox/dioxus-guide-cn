@@ -39,7 +39,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-17T17:05:53.000Z",
+    'date': "2022-01-21T12:32:13.000Z",
     'updated': null,
     'excerpt': "至今我们已经学习了如何构造（包装）我们的程序了，但它现在仅仅是动态的，这没有任何意思。 所以说在本大章中，我们会尝试让我们的项目 动起来 ！ 在我们深入学习如何完成交互设计之前，我们先大致了解一下 Dioxus 是如何处理...",
     'cover': "../../assets/component_tree.png",
@@ -96,7 +96,12 @@ export default {
         {
             "text": "交互性",
             "link": "/docs/interactivity/index.html",
-            "children": []
+            "children": [
+                {
+                    "text": "钩子与内部状态",
+                    "link": "/docs/interactivity/hooks-state.html"
+                }
+            ]
         }
     ]
 };

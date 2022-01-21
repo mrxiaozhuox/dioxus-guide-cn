@@ -36,7 +36,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-17T17:05:53.000Z",
+    'date': "2022-01-21T12:32:13.000Z",
     'updated': null,
     'excerpt': "所有用于组件的道具都必须 Properties 特征，而 Props 派生宏则可以自动实现它。 在本章中我们会了解到： - 使用 Props 宏 - 记忆 Memoization - 可选的道具 - Inline_props 宏 使用 Props 宏 默认的 Scope 不包含任何数据： /...",
     'cover': undefined,
@@ -93,7 +93,12 @@ export default {
         {
             "text": "交互性",
             "link": "/docs/interactivity/index.html",
-            "children": []
+            "children": [
+                {
+                    "text": "钩子与内部状态",
+                    "link": "/docs/interactivity/hooks-state.html"
+                }
+            ]
         }
     ]
 };

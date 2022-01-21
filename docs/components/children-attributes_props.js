@@ -38,7 +38,7 @@ export default {
     'contributors': [
         "mrxiaozhuox"
     ],
-    'date': "2022-01-17T17:05:53.000Z",
+    'date': "2022-01-21T12:32:13.000Z",
     'updated': null,
     'excerpt': "有时候，你会希望将一些重要的功能封装在你的状态中，而不是直接嵌套在另一个组件中。 在这些情况下，你需要将元素和属性传递到组件中，并让组件适当地放置它们。 本章我们主要会了解到： - 传递子元素到组件。 - 传递属性到组...",
     'cover': undefined,
@@ -95,7 +95,12 @@ export default {
         {
             "text": "交互性",
             "link": "/docs/interactivity/index.html",
-            "children": []
+            "children": [
+                {
+                    "text": "钩子与内部状态",
+                    "link": "/docs/interactivity/hooks-state.html"
+                }
+            ]
         }
     ]
 };

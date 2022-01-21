@@ -68,7 +68,12 @@ export default {
             {
                 text: "交互性",
                 link: "/docs/interactivity/index.html",
-                children: []
+                children: [
+                    {
+                        text: "钩子与内部状态",
+                        link: "/docs/interactivity/hooks-state.html",
+                    }
+                ]
             }
         ]
     },

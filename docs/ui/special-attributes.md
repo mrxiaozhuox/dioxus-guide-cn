@@ -135,11 +135,11 @@ pub fn StateInput<'a>(cx: Scope<'a, InputProps<'a>>) -> Element {
 比如说当一个输入框更新了数据，则同时更新后端变量值：
 
 ```rust
-let value = use_state(&cx, || String::from("hello world"));
+let (value, set_value) = use_state(&cx, || String::from("hello world"));
 
 rsx! {
     input {
-        oninput: move |evt| value.set(evt.value.clone()),
+        oninput: move |evt| set_value(evt.value.clone()),
         value: "{value}",
     }
 }
@@ -150,11 +150,11 @@ rsx! {
 
 ```rust
 // 这是一个更直观的演示代码
-let value = use_state(&cx, || String::from("hello world"));
+let (value, set_value) = use_state(&cx, || String::from("hello world"));
 
 rsx! {
     input {
-        oninput: move |evt| value.set(evt.value.clone()),
+        oninput: move |evt| set_value(evt.value.clone()),
         value: "{value}",
     }
     p { "Input Value: {value}" }

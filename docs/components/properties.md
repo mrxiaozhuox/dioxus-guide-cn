@@ -78,8 +78,8 @@ fn Demo<'a>(cx: Scope<'a, MyProps<'a>>) -> Element {
 
 ```rust
 fn Demo(cx: Scope) -> Element {
-    let name = use_state(&cx, || String::from("bob"));
-    let age = use_state(&cx, || 21);
+    let (name, _set_name) = use_state(&cx, || String::from("bob"));
+    let (age, _set_age) = use_state(&cx, || 21);
 
     cx.render(rsx!{
         Name { name: name }

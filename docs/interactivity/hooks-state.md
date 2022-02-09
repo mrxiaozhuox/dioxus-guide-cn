@@ -121,12 +121,12 @@ fn example(cx: Scope) -> Element {
 
 ```rust
 fn example(cx: Scope) -> Element {
-    let name = use_state(&cx, || "Jack");
+    let (name, set_name) = use_state(&cx, || "Jack");
 
     cx.render(rsx!(
         "Hello, {name}"
-        button { onclick: move |_| name.set("John"), }
-        button { onclick: move |_| name.set("Jane"), }
+        button { onclick: move |_| set_name("John"), }
+        button { onclick: move |_| set_name("Jane"), }
     ))
 }
 ```
@@ -149,7 +149,7 @@ impl<'a, T> UseState<'a, T> {
 
 ```rust
 fn example(cx: Scope) -> Element {
-    let name = use_state(&cx, || "Jack");
+    let (name, _set_name) = use_state(&cx, || "Jack");
 
     match *name {
         "Jack" => {}

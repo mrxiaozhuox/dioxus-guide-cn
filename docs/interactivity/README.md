@@ -61,12 +61,12 @@ Dioxus 提供了好几种方法使得 `State` 能在运行时被更新。
 所以说在此时，我们需要用到一个叫 `Hook 钩子` 的东西，它会在你的组件内部存放数据，并使得这些数据 “从上往下” 的 “流动” 到子组件中。
 Hook 是一系列特殊的函数，它在组件的内存中保留一个状态槽，并提供一些功能来更新该状态。
 
-我们最常用的 `Hook` 便是函数 `use_state` ，它允许你存放数据到内部，并支持你对数据的更新编辑。
+我们最常用的 `Hook` 便是函数 `use_state` ，它将会返回两个元素，一个为当前值，另一个则用于更新当前值。
 
 ```rust
 fn App(cx: Scope)-> Element {
 
-    let post = use_state(&cx, || {
+    let (post, set_post) = use_state(&cx, || {
         PostData {
             id: Uuid::new_v4(),
             score: 10,
@@ -86,10 +86,10 @@ fn App(cx: Scope)-> Element {
 }
 ```
 
-我们可以通过 `set` 方法直接更新它的值：
+我们可以通过 `set_post` 方法直接更新它的值：
 
 ```rust
-post.set( PostData {
+set_post( PostData {
     id: Uuid::new_v4(),
     score: 20,
     comment_count: 0,
@@ -112,11 +112,11 @@ post.set( PostData {
 
 ```rust
 fn App(cx: Scope)-> Element {
-    let post = use_state(&cx, || PostData::new());
+    let (post, set_post) = use_state(&cx, || PostData::new());
 
     cx.render(rsx!{
         button {
-            on_click: move |_| post.set(PostData::random())
+            on_click: move |_| set_post(PostData::random())
             "Generate a random post"
         }
         Post { props: &post }
@@ -138,7 +138,7 @@ fn App(cx: Scope)-> Element {
 
 ```rust
 fn App(cx: Scope)-> Element {
-    let mut sec_elapsed = use_state(&cx, || 0);
+    let mut (sec_elapsed, _) = use_state(&cx, || 0);
 
     use_future(&cx, || {
         let mut sec_elapsed = sec_elapsed.for_async();

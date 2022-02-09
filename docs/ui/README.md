@@ -40,7 +40,7 @@ container.set_onclick(move |_| {
 如果我们使用 Dioxus 框架来完成这个程序，则只需要：
 
 ```rust
-let mut state = use_state(&cx, || "red");
+let mut (state, set_state) = use_state(&cx, || "red");
 
 cx.render(rsx!(
     Container {
@@ -49,7 +49,7 @@ cx.render(rsx!(
         Light { color: "green", enabled: state == "green", }
 
         onclick: move |_| {
-            state.set(match *state {
+            set_state(match *state {
                 "green" => "yellow",
                 "yellow" => "red",
                 "red" => "green",

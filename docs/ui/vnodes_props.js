@@ -34,11 +34,11 @@ export default {
                 React.createElement("a", { href: "#%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7" }, "\u5143\u7D20\u5C5E\u6027")),
             React.createElement("li", null,
                 React.createElement("a", { href: "#%E7%9B%91%E5%90%AC%E5%99%A8" }, "\u76D1\u542C\u5668")))),
-    'author': "YuKun Liu",
+    'author': "mrxiaozhuox",
     'contributors': [
-        "YuKun Liu"
+        "mrxiaozhuox"
     ],
-    'date': "2022-02-09T02:26:24.000Z",
+    'date': "2022-02-09T04:55:28.000Z",
     'updated': null,
     'excerpt': "每一个 用户UI 都是由多个元素交叉组织而成，一堆堆元素组成了一切复杂的应用程序界面。 在 Dioxus 中，我们可以使用组件来包装元素，再将组件当成一个更到的元素。 这样一层一层的包裹，便形成了最终的应用程序！ 声明元素 Di...",
     'cover': undefined,

@@ -36,11 +36,11 @@ export default {
                     React.createElement("li", null,
                         React.createElement("a", { href: "#mobile-%E6%94%AF%E6%8C%81" }, "Mobile \u652F\u6301"),
                         React.createElement("ol", null)))))),
-    'author': "mrxiaozhuox",
+    'author': "YuKun Liu",
     'contributors': [
-        "mrxiaozhuox"
+        "YuKun Liu"
     ],
-    'date': "2022-01-21T12:32:13.000Z",
+    'date': "2022-02-09T02:26:24.000Z",
     'updated': null,
     'excerpt': "Dioxus 是一款用于构建跨平台用户界面的框架（生态系统），它使用 Rust 编程语言。 这本指南将带领你学习并使用它。（我们会尝试在 网页端、移动端、桌面端 使用 Dixous 框架） fn App(cx: Scope) -> Element { let mut count ...",
     'cover': "https://dioxuslabs.com/guide/images/dioxuslogo_full.png",

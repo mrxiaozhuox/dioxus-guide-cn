@@ -34,11 +34,11 @@ export default {
                 React.createElement("a", { href: "#%E9%80%9A%E8%BF%87-hooks-%E6%9B%B4%E6%96%B0" }, "\u901A\u8FC7 Hooks \u66F4\u65B0")),
             React.createElement("li", null,
                 React.createElement("a", { href: "#dioxus-hooks-%E6%8F%90%E4%BE%9B%E7%9A%84%E6%96%B9%E6%B3%95" }, "Dioxus-Hooks \u63D0\u4F9B\u7684\u65B9\u6CD5")))),
-    'author': "mrxiaozhuox",
+    'author': "YuKun Liu",
     'contributors': [
-        "mrxiaozhuox"
+        "YuKun Liu"
     ],
-    'date': "2022-01-21T12:32:13.000Z",
+    'date': "2022-02-09T02:26:24.000Z",
     'updated': null,
     'excerpt': "在本章节中，我们将更加深入的了解 Hook 的工作原理。 Hooks 理论 在过去的几十年里，计算机学者和开发者们一直在试图寻找一种设计用户界面的 “正确方法”。 现在来看，已经出现了很多种设计思路，而它们都各有优势，而大致上...",
     'cover': undefined,

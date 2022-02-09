@@ -34,11 +34,11 @@ export default {
                 React.createElement("a", { href: "#cargo-%E6%8B%93%E5%B1%95%E5%8C%85" }, "Cargo \u62D3\u5C55\u5305")),
             React.createElement("li", null,
                 React.createElement("a", { href: "#rust-%E8%AF%AD%E8%A8%80%E7%9F%A5%E8%AF%86" }, "Rust \u8BED\u8A00\u77E5\u8BC6")))),
-    'author': "mrxiaozhuox",
+    'author': "YuKun Liu",
     'contributors': [
-        "mrxiaozhuox"
+        "YuKun Liu"
     ],
-    'date': "2022-01-21T12:32:13.000Z",
+    'date': "2022-02-09T02:26:24.000Z",
     'updated': null,
     'excerpt': "在本章中，我们将安装 Rust 编程语言与 Dioxus 配套工具。 Rust 语言安装 安装 Dioxus 安装完成后，如果你打算将应用部署到 Web 上，请确保将 wasm32-unknown-unknown 作为运行目标。 rustup target add wasm32-unknown-unknow...",
     'cover': undefined,

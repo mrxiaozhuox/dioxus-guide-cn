@@ -26,11 +26,11 @@ export default {
         React.createElement("ol", null,
             React.createElement("li", null,
                 React.createElement("a", { href: "#%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2" }, "\u58F0\u660E\u5F0F\u7528\u6237\u754C\u9762")))),
-    'author': "mrxiaozhuox",
+    'author': "YuKun Liu",
     'contributors': [
-        "mrxiaozhuox"
+        "YuKun Liu"
     ],
-    'date': "2022-01-21T12:32:13.000Z",
+    'date': "2022-02-09T02:26:24.000Z",
     'updated': null,
     'excerpt': "通过这章的学习，我们将学会如何通过 Dioxus 构建一个漂亮的 UI 界面！这一定很酷！ 声明式用户界面 Dioxus 是一个 声明式框架，这意味着我们不需要手动的 创建 元素和手动 设置 元素信息（通过函数调用）。 我们只需要对我们想...",
     'cover': undefined,

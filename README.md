@@ -44,10 +44,10 @@ WASM 有很多系统限制，这导致你的代码不能包含任何原生的系
 
 一些 Web 端的演示项目：
 
-- [TodoMVC](https://github.com/DioxusLabs/example-projects/tree/master/todomvc)
-- [ECommerce](https://github.com/DioxusLabs/example-projects/tree/master/ecommerce-site)
+- [TodoMVC](https://gitee.com/dioxus-cn/example-projects/tree/master/todomvc)
+- [ECommerce](https://gitee.com/dioxus-cn/example-projects/tree/master/ecommerce-site)
 
-![TODOMVC_IMG](https://github.com/DioxusLabs/example-projects/raw/master/todomvc/example.png)
+![TODOMVC_IMG](https://gitee.com/dioxus-cn/example-projects/raw/master/todomvc/example.png)
 
 ### SSR 支持
 
@@ -75,10 +75,10 @@ let contents = dioxus::ssr::render_vdom(&dom);
 
 一些 Desktop 端的演示项目：
 
-- [文件浏览器](https://github.com/DioxusLabs/example-projects/tree/master/file-explorer)
-- [WiFi 扫描器](https://github.com/DioxusLabs/example-projects/blob/master/wifi-scanner)
+- [文件浏览器](https://gitee.com/dioxus-cn/example-projects/tree/master/file-explorer)
+- [WiFi 扫描器](https://gitee.com/dioxus-cn/example-projects/blob/master/wifi-scanner)
 
-![FE_IMG](https://github.com/DioxusLabs/example-projects/raw/master/file-explorer/image.png)
+![FE_IMG](https://gitee.com/dioxus-cn/example-projects/raw/master/file-explorer/image.png)
 
 
 ### Mobile 支持
@@ -94,5 +94,5 @@ let contents = dioxus::ssr::render_vdom(&dom);
 
 一些 Mobile 端的演示项目：
 
-- [Todo App](https://github.com/DioxusLabs/example-projects/blob/master/ios_demo)
+- [Todo App](https://gitee.com/dioxus-cn/example-projects/blob/master/ios_demo)
 

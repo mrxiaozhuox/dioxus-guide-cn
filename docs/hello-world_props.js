@@ -39,11 +39,11 @@ export default {
                         React.createElement("a", { href: "#%E8%A7%A3%E6%9E%90%E4%BB%A3%E7%A0%81" }, "\u89E3\u6790\u4EE3\u7801")),
                     React.createElement("li", null,
                         React.createElement("a", { href: "#scope-%E5%AF%B9%E8%B1%A1" }, "Scope \u5BF9\u8C61")))))),
-    'author': "YuKun Liu",
+    'author': "mrxiaozhuox",
     'contributors': [
-        "YuKun Liu"
+        "mrxiaozhuox"
     ],
-    'date': "2022-02-10T11:57:47.000Z",
+    'date': "2022-02-11T16:35:11.000Z",
     'updated': null,
     'excerpt': "让我们通过一个简单的 Hello World 程序来学习 Dioxus 的基本使用吧！ 在本章节中，我们将讨论： - 通过 Cargo 创建一个新项目 - 添加 Dioxus 工具包到新项目中 - 启动属于我们的第一个 Dioxus 桌面程序 创建项目 首先，让我们...",
     'cover': "https://dioxuslabs.com/guide/images/helloworld.png",

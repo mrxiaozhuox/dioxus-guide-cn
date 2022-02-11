@@ -32,11 +32,11 @@ export default {
                 React.createElement("a", { href: "#%E5%8F%AF%E9%80%89%E9%81%93%E5%85%B7" }, "\u53EF\u9009\u9053\u5177")),
             React.createElement("li", null,
                 React.createElement("a", { href: "#inline_props-%E5%AE%8F" }, "inline_props \u5B8F")))),
-    'author': "YuKun Liu",
+    'author': "mrxiaozhuox",
     'contributors': [
-        "YuKun Liu"
+        "mrxiaozhuox"
     ],
-    'date': "2022-02-10T11:57:47.000Z",
+    'date': "2022-02-11T16:35:11.000Z",
     'updated': null,
     'excerpt': "所有用于组件的道具都必须 Properties 特征，而 Props 派生宏则可以自动实现它。 在本章中我们会了解到： - 使用 Props 宏 - 记忆 Memoization - 可选的道具 - Inline_props 宏 使用 Props 宏 默认的 Scope 不包含任何数据： /...",
     'cover': undefined,

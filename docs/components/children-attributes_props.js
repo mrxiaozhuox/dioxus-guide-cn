@@ -34,11 +34,11 @@ export default {
                 React.createElement("a", { href: "#%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7" }, "\u4F20\u9012\u5C5E\u6027")),
             React.createElement("li", null,
                 React.createElement("a", { href: "#%E4%BC%A0%E9%80%92%E5%A4%84%E7%90%86%E5%99%A8" }, "\u4F20\u9012\u5904\u7406\u5668")))),
-    'author': "mrxiaozhuox",
+    'author': "YuKun Liu",
     'contributors': [
-        "mrxiaozhuox"
+        "YuKun Liu"
     ],
-    'date': "2022-02-11T16:35:11.000Z",
+    'date': "2022-02-14T09:04:10.000Z",
     'updated': null,
     'excerpt': "有时候，你会希望将一些重要的功能封装在你的状态中，而不是直接嵌套在另一个组件中。 在这些情况下，你需要将元素和属性传递到组件中，并让组件适当地放置它们。 本章我们主要会了解到： - 传递子元素到组件。 - 传递属性到组...",
     'cover': undefined,

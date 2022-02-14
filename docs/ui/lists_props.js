@@ -33,11 +33,11 @@ export default {
                 React.createElement("ol", null,
                     React.createElement("li", null,
                         React.createElement("a", { href: "#%E4%B8%BA%E4%BB%80%E4%B9%88-dioxus-%E9%9C%80%E8%A6%81%E9%94%AE" }, "\u4E3A\u4EC0\u4E48 Dioxus \u9700\u8981\u952E\uFF1F\u2018")))))),
-    'author': "mrxiaozhuox",
+    'author': "YuKun Liu",
     'contributors': [
-        "mrxiaozhuox"
+        "YuKun Liu"
     ],
-    'date': "2022-02-11T16:35:11.000Z",
+    'date': "2022-02-14T09:04:10.000Z",
     'updated': null,
     'excerpt': "有什么我们需要将同一组件渲染多次，那我们就可以把它当成一个列表来渲染。 通过列表渲染 想想我们常用的一些网站：类似于知乎，在主页中会有很多条同样的 文章 块。 它看起来就是这样的：每一个 Post 组件包含了具体内容，但是...",
     'cover': undefined,

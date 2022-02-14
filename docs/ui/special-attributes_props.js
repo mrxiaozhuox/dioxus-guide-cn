@@ -36,11 +36,11 @@ export default {
                 React.createElement("a", { href: "#%E6%8E%A7%E5%88%B6%E8%A1%A8%E5%8D%95%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%9E%E6%80%A7" }, "\u63A7\u5236\u8868\u5355\u7684\u7279\u6B8A\u5C5E\u6027")),
             React.createElement("li", null,
                 React.createElement("a", { href: "#javascript-%E4%BB%A3%E7%A0%81%E4%BA%8B%E4%BB%B6" }, "Javascript \u4EE3\u7801\u4E8B\u4EF6")))),
-    'author': "mrxiaozhuox",
+    'author': "YuKun Liu",
     'contributors': [
-        "mrxiaozhuox"
+        "YuKun Liu"
     ],
-    'date': "2022-02-11T16:35:11.000Z",
+    'date': "2022-02-14T09:04:10.000Z",
     'updated': null,
     'excerpt': "在这一章节中，我们需要了解 Dioxus 的特殊类型： - dangerous_inner_html - boolean attributes - prevent_default - ..attributes - event handlers as string attributes - value checked and selected 原生HTML 在 React 中...",
     'cover': undefined,

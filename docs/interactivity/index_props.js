@@ -35,11 +35,11 @@ export default {
                         React.createElement("a", { href: "#%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6" }, "\u76D1\u542C\u4E8B\u4EF6")),
                     React.createElement("li", null,
                         React.createElement("a", { href: "#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1" }, "\u5F02\u6B65\u4EFB\u52A1")))))),
-    'author': "mrxiaozhuox",
+    'author': "YuKun Liu",
     'contributors': [
-        "mrxiaozhuox"
+        "YuKun Liu"
     ],
-    'date': "2022-02-11T16:35:11.000Z",
+    'date': "2022-02-14T09:04:10.000Z",
     'updated': null,
     'excerpt': "至今我们已经学习了如何构造（包装）我们的程序了，但它现在仅仅是动态的，这没有任何意思。 所以说在本大章中，我们会尝试让我们的项目 动起来 ！ 在我们深入学习如何完成交互设计之前，我们先大致了解一下 Dioxus 是如何处理...",
     'cover': "../../assets/component_tree.png",

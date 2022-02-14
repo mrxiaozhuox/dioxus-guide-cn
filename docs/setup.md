@@ -17,7 +17,7 @@ rustup target add wasm32-unknown-unknown
 `Dioxus-Cli` 可以帮助你 创建/管理 你的 Dioxus 项目，所以说我们建议你安装它：
 
 ```
-cargo install dioxus-cli
+cargo install --git https://github.com/DioxusLabs/cli
 ```
 
 你可以使用以下命令 更新/覆盖 之前的 dioxus-cli 版本：

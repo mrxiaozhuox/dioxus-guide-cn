@@ -21,7 +21,7 @@ struct AppProps {
 
 ```rust
 fn App(cx: Scope<AppProps>) -> Element {
-    if props.logged_in {
+    if cx.props.logged_in {
         cx.render(rsx!{
             DashboardScreen {}
         })
